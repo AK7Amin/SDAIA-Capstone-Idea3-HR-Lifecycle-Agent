@@ -1,0 +1,20 @@
+# Secrets — never committed
+.env
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.venv/
+
+# Local runtime data
+chroma_db/
+*.sqlite*
+
+# Reports: generated evidence IS committed (synthetic data only).
+# If real personal data ever enters, stop committing outputs (rule R021).
+
+# IDE
+.vscode/
+.idea/
