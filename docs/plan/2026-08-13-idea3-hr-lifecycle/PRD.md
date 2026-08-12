@@ -168,7 +168,12 @@ separate interview. demo.md covers the demo-script gap.
 
 | Slice | Status | Transitions | Diag. spikes | Last hypothesis | Red SHA | Green SHA |
 |---|---|---|---|---|---|---|
-| 1–15 | not started | 0/5 | 0/2 | — | | |
+| 1 | GREEN | 0/5 | 0/2 | — | 73828c5 | 31008e1 |
+| 2 | running (agent) | 0/5 | 0/2 | — | | |
+| 3 | running (agent) | 0/5 | 0/2 | — | | |
+| 4 | waiting on 3 | 0/5 | 0/2 | — | | |
+| 5 | running (agent) | 0/5 | 0/2 | — | | |
+| 6–15 | not started | 0/5 | 0/2 | — | | |
 
 **Closing status**: (declared at phase-3 exit: SUCCESS / PARTIAL)
 
