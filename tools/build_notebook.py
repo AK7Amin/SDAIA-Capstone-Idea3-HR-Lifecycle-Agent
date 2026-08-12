@@ -112,7 +112,54 @@ print("evasion blocked:", scan_text(sneaky).blocked)
 doc = "ID 1023456789, phone ٠٥٠١٢٣٤٥٦٧, salary band 12000 SAR, start ٢٠٢٦-٠٩-٠١"
 print(mask_pii(doc))
 """),
-    ("core", "markdown", "## Core test suite\nCaptured from this very run:"),
+    # ------------------------------------------------------------ agents
+    ("agents", "markdown", "## 4 · State-graph orchestration & multi-agent roles (D2, D3)\n"
+     "The coordinator IS the graph: 10 nodes, 4 conditional routers, two "
+     "bounded loops, one human-in-the-loop interrupt. Five named agent roles "
+     "communicate only through typed Pydantic contracts in shared state — "
+     "centralized coordination. Diagram generated from the compiled graph "
+     "(not hand-drawn):"),
+    ("agents", "code", """\
+from tests.test_graph_paths import make_app  # the same stub harness the tests use
+
+app, _agents, _fx = make_app()
+print(app.get_graph().draw_mermaid())
+"""),
+    ("agents", "markdown", "### Pause → resume mechanics (stub-driven; the live LLM run "
+     "appears in section 6 once the pipeline lands)\n"
+     "`hr_gate` starts with `interrupt()` — the run below pauses, then a "
+     "second invocation resumes with an approval decision. Statuses and the "
+     "audit trail are real graph output:"),
+    ("agents", "code", """\
+from langgraph.types import Command
+
+g, _agents2, fx = make_app()
+cfg = {"configurable": {"thread_id": "notebook-agents-demo"}}
+out = g.invoke({"candidate_meta": {"candidate_id": "NB-01", "name": "Demo", "role": "Data Engineer",
+                                   "start_date": "2026-09-01"},
+                "masked_resume": "5 years of ETL experience."}, cfg)
+print("paused:", "__interrupt__" in out)
+print("contract written while paused?", bool(fx.contracts))   # governance: must be False
+
+final = g.invoke(Command(resume={"decision": "approve"}), cfg)
+print("status:", final.get("status"))
+for e in final["audit_trail"]:
+    tag = f" [{e.reasoning_pattern}]" if e.reasoning_pattern else ""
+    print(f"  {e.node:<18}{tag}")
+"""),
+    ("agents", "code", """\
+# Tamper-evidence: the audit trail is a hash chain — flip one event and
+# verification breaks. (The independent CLI verifier lands in the prod group.)
+from src.schemas import verify_chain, AuditEvent
+
+trail = final["audit_trail"]
+print("chain intact:", verify_chain(trail))
+forged = list(trail)
+forged[2] = AuditEvent(node=trail[2].node, summary="(forged)", prev_hash=trail[2].prev_hash)
+print("after forging one event:", verify_chain(forged))
+"""),
+    # ------------------------------------------------------------ suite line
+    ("core", "markdown", "## Test suite\nCaptured from this very run:"),
     ("core", "code", """\
 import subprocess, sys
 r = subprocess.run(
