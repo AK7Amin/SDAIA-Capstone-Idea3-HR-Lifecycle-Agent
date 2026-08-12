@@ -1,28 +1,38 @@
 """End-to-end integration test — the executable success criterion.
 
-Written RED before any implementation (xfail until the final slice lifts it).
-Flow under test:
-    hired-candidate JSON → intake/profile/plan/review/draft →
-    PAUSED at hr_gate (awaiting_approval) →
-    resumed with "approve" from a FRESH graph instance (new-process semantics) →
-    contract file rendered + IT provisioning ticket written + trace chain intact.
+Written RED before implementation. APPEND-ONLY until the xfail marker is
+lifted (slice 11's exit criterion) — executors must never edit this file to
+fit their code; the code must grow to fit this file.
 
-Uses stubbed agents (no LLM calls) and sqlite checkpointer (no Docker) so it
-runs anywhere; the Postgres path has its own dedicated test in
-test_checkpoint_resume.py.
+Frozen contracts encoded here (critique round 1, B3/M13):
+- `build_graph_with_stubs(effects, checkpointer) -> compiled graph`
+- `process_case(case_file, graph) -> {"status", "thread_id"}`
+- `resume_case(thread_id, decision, graph) -> {"status", "audit_trail"}`
+- `FileEffects(root)`; `effects.it_tickets(candidate_id) -> list`
+- Artifacts: `outbox/<id>/contract.md`, `outbox/<id>/welcome.md`
+- Status literals: "awaiting_approval", "completed"
+- On-disk evidence: `reports/traces/<thread_id>.json`, metrics/dashboard
+  artifacts produced BY THIS RUN (must contain this thread_id).
+
+Stubbed agents + sqlite checkpointer: zero network, zero Docker, zero keys.
 """
 import json
 from pathlib import Path
 
 import pytest
 
-pytestmark = pytest.mark.xfail(
-    reason="RED by design: implementation not built yet (lifted by final slice)",
+
+@pytest.mark.xfail(
+    reason="RED by design: implementation not built yet (lifted by slice 11)",
     strict=True,
 )
+def test_full_onboarding_cycle_pauses_resumes_and_produces_artifacts(
+    tmp_path, monkeypatch
+):
+    # An accidental real-agent path must fail loudly, not call a provider.
+    monkeypatch.delenv("LLM_API_KEY", raising=False)
+    monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
 
-
-def test_full_onboarding_cycle_pauses_resumes_and_produces_artifacts(tmp_path):
     from src.effects import FileEffects
     from src.pipeline import build_graph_with_stubs, process_case, resume_case
     from src.schemas import verify_chain
@@ -39,27 +49,52 @@ def test_full_onboarding_cycle_pauses_resumes_and_produces_artifacts(tmp_path):
     case_file.write_text(json.dumps(candidate), encoding="utf-8")
 
     effects = FileEffects(tmp_path)
-    checkpoint_db = tmp_path / "state.sqlite"
 
-    # Phase 1: run until the human gate.
-    result = process_case(case_file, effects=effects, checkpoint_db=checkpoint_db)
+    def make_graph():
+        """Fresh graph per phase = new-process semantics on one sqlite file."""
+        return build_graph_with_stubs(
+            effects=effects, checkpoint_db=tmp_path / "state.sqlite"
+        )
+
+    # ---- Phase 1: run until the human gate ----
+    result = process_case(case_file, graph=make_graph())
     assert result["status"] == "awaiting_approval"
     thread_id = result["thread_id"]
 
-    # Phase 2: resume from a FRESH graph instance (new-process semantics).
-    resumed = resume_case(thread_id, "approve", effects=effects, checkpoint_db=checkpoint_db)
+    # Governance: NOTHING binding exists on disk before approval (M9).
+    assert not (tmp_path / "outbox").exists() or not any(
+        (tmp_path / "outbox").rglob("*")
+    ), "binding artifact written before human approval"
+
+    # ---- Phase 2: resume from a FRESH graph instance ----
+    resumed = resume_case(thread_id, "approve", graph=make_graph())
     assert resumed["status"] == "completed"
 
     # Real artifacts, not state flips:
     contract = tmp_path / "outbox" / "CAND-001" / "contract.md"
-    assert contract.exists()
-    assert "Sara Alqahtani" in contract.read_text(encoding="utf-8")
+    welcome = tmp_path / "outbox" / "CAND-001" / "welcome.md"
+    assert contract.exists() and "Sara Alqahtani" in contract.read_text(encoding="utf-8")
+    assert welcome.exists()
     assert effects.it_tickets("CAND-001"), "IT provisioning ticket missing"
 
-    # Audit trail: full path visible incl. the gate, chain tamper-evident.
+    # Audit trail: full path incl. the Reflexion reviewer and the gate.
     trail = resumed["audit_trail"]
     nodes = [e.node for e in trail]
     for expected in ("intake", "profile_analyst", "training_planner",
-                     "contract_drafter", "hr_gate", "it_provisioner", "notifier"):
+                     "plan_reviewer", "contract_drafter", "hr_gate",
+                     "it_provisioner", "notifier"):
         assert expected in nodes, f"node {expected} missing from audit trail"
     assert verify_chain(trail)
+
+    # On-disk observability produced BY THIS RUN (M12 — prior-project defect):
+    trace_file = tmp_path / "reports" / "traces" / f"{thread_id}.json"
+    assert trace_file.exists(), "per-case trace file not written"
+    trace = json.loads(trace_file.read_text(encoding="utf-8"))
+    assert trace["chain_intact"] is True
+    assert [e["node"] for e in trace["events"]].count("intake") == 1
+
+    metrics_file = tmp_path / "reports" / "metrics-snapshot.json"
+    assert metrics_file.exists(), "metrics snapshot not written"
+    assert thread_id in metrics_file.read_text(encoding="utf-8"), (
+        "metrics artifact is stale — not produced by this run"
+    )

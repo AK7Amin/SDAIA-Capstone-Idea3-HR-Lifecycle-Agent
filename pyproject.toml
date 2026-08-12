@@ -1,0 +1,10 @@
+[tool.pytest.ini_options]
+# B4: bare `pytest -q` must import `src` from the repo root — without this,
+# ModuleNotFoundError is swallowed by xfail forever.
+pythonpath = ["."]
+# Determinism policy: the default suite is zero-network, zero-Docker, zero-keys.
+addopts = "-m 'not docker and not live'"
+markers = [
+    "docker: needs the local Docker postgres (run explicitly: pytest -m docker -rs)",
+    "live: calls a real LLM provider (never in CI/default runs)",
+]
