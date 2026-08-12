@@ -105,7 +105,7 @@ meter (per node, case, provider), static HTML dashboard rendered every run.
 | PostgresSaver: CM construction, setup(), cross-process resume | Yes | **PROVEN** 2026-08-13 (`spike_postgres.py`): `from_conn_string` IS a CM (opposite of SqliteSaver), `setup()` idempotent, resume on fresh connection keeps state. Delete spike after baseline |
 | psycopg needs `[binary]` on Windows | Yes | PROVEN — plain install lacks libpq |
 | Long-lived saver for service/CLI (outside `with`) | Yes | **Resolved by critique B2**: `psycopg_pool.ConnectionPool` + `PostgresSaver(pool)` in FastAPI lifespan (a single psycopg Connection is NOT thread-safe); CLI keeps the CM. `psycopg-pool` pinned explicitly. PG down → fail fast, exit 2, actionable message; sqlite only via explicit `--checkpointer sqlite`, never auto-fallback (M10) |
-| Mistral-medium handles English JSON agent output @ temp 0 | Low | Probe at slice 6 |
+| Mistral-medium handles English JSON agent output @ temp 0 | Low | **PROVEN** live probe 2026-08-13 02:58: valid contract-conformant JSON on first call |
 | docker-compose app+pg networking & healthcheck | Medium | Verify at slice 13 |
 
 ## Slices
@@ -173,7 +173,9 @@ separate interview. demo.md covers the demo-script gap.
 | 3 | GREEN | 0/5 | 0/2 | — | 89e1c4c | 4a5cd5d |
 | 4 | GREEN | 0/5 | 0/2 | — | (pair) | (pair) |
 | 5 | GREEN | 0/5 | 0/2 | — | 05f5743 | ec50356 |
-| 6–15 | not started | 0/5 | 0/2 | — | | |
+| 6 | GREEN | 0/5 | 0/2 | — | 4899f19 | 43cefde |
+| 7 | running (agent) | 0/5 | 0/2 | — | | |
+| 8–15 | not started | 0/5 | 0/2 | — | | |
 
 **Closing status**: (declared at phase-3 exit: SUCCESS / PARTIAL)
 
