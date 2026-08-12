@@ -1,0 +1,56 @@
+{# Contract notice, rendered post-approval only (governance ordering, M9).
+
+   Strictness split, on purpose:
+   * `profile.*` and `contract.*` are looked up through StrictUndefined — a
+     missing name or start date must fail loudly rather than print a blank in a
+     document a human is meant to sign against.
+   * `body_fields`, `citation_notes` and `probation_days` are normalised by
+     src/effects.py before they arrive, because they are free-form model output
+     and a missing optional field is not an error.
+#}
+# Employment Contract Notice
+
+**Case:** {{ case_id }}
+
+Dear {{ profile.name }},
+
+We are pleased to confirm the employment details recorded for your onboarding
+case. This notice summarises those details; the signed contract follows from HR
+separately.
+
+| Item | Detail |
+| --- | --- |
+| Candidate | {{ profile.name }} |
+| Role | {{ contract.role }} |
+| Start date | {{ contract.start_date }} |
+| Salary band | {{ contract.salary_band or "not specified" }} |
+{% for label, value in body_fields %}
+| {{ label }} | {{ value }} |
+{% endfor %}
+
+## Probation
+
+A probation period of {{ probation_days }} days runs from the start date above,
+under policy POL-001. The hiring manager files a written probation review before
+that period ends, and confirmation of employment is never automatic.
+
+## Week one
+
+Mandatory information security and data-handling training must be completed
+during your first calendar week (POL-002). Until it is passed, system access
+stays read-only.
+{% if citation_notes %}
+
+## Review notes
+
+The citation validator could not verify the following policy references, so they
+are recorded here instead of being presented as policy:
+
+{% for note in citation_notes %}
+- {{ note }}
+{% endfor %}
+{% endif %}
+
+---
+
+{{ footer }}
