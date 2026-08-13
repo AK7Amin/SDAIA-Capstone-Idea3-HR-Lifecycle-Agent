@@ -80,8 +80,8 @@ flowchart TD
     intake -->|valid| profile_analyst
     intake -->|invalid| quarantine([quarantine])
     profile_analyst -->|complete| training_planner
-    profile_analyst -->|"retry (max 2)"| profile_analyst
-    profile_analyst -->|exhausted| quarantine
+    profile_analyst --> profile_analyst
+    profile_analyst -->|"exhausted after 2 tries"| quarantine
     training_planner --> plan_reviewer[plan_reviewer — Reflexion critic]
     plan_reviewer -->|"revise (once)"| training_planner
     plan_reviewer -->|approve| contract_drafter
