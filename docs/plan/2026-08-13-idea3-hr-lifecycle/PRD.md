@@ -106,7 +106,7 @@ meter (per node, case, provider), static HTML dashboard rendered every run.
 | psycopg needs `[binary]` on Windows | Yes | PROVEN — plain install lacks libpq |
 | Long-lived saver for service/CLI (outside `with`) | Yes | **Resolved by critique B2**: `psycopg_pool.ConnectionPool` + `PostgresSaver(pool)` in FastAPI lifespan (a single psycopg Connection is NOT thread-safe); CLI keeps the CM. `psycopg-pool` pinned explicitly. PG down → fail fast, exit 2, actionable message; sqlite only via explicit `--checkpointer sqlite`, never auto-fallback (M10) |
 | Mistral-medium handles English JSON agent output @ temp 0 | Low | **PROVEN** live probe 2026-08-13 02:58: valid contract-conformant JSON on first call |
-| docker-compose app+pg networking & healthcheck | Medium | Verify at slice 13 |
+| docker-compose app+pg networking & healthcheck | Medium | **PROVEN** live 2026-08-13: healthchecks green, internal DSN postgres:5432, restart-survival captured |
 
 ## Slices
 
@@ -179,8 +179,9 @@ separate interview. demo.md covers the demo-script gap.
 | 9 | GREEN | 0/5 | 0/2 | — | a7b840d | 21f9353 |
 | 10 | GREEN | 0/5 | 0/2 | — | (pair) | (pair) |
 | 11 | GREEN (xfail LIFTED — e2e live) | 0/5 | 0/2 | — | 03b70af | 20a5148 |
-| 12 | running (agent) | 0/5 | 0/2 | — | | |
-| 13–15 | not started | 0/5 | 0/2 | — | | |
+| 12 | GREEN | 0/5 | 0/2 | — | 16c4795 | 355ec02 |
+| 13 | GREEN (live compose captures) | 0/5 | 0/2 | — | — | (this) |
+| 14–15 | in progress (main) | 0/5 | 0/2 | — | | |
 
 **Closing status**: (declared at phase-3 exit: SUCCESS / PARTIAL)
 
