@@ -110,6 +110,7 @@ docker run -d --name idea3-pg -e POSTGRES_PASSWORD=capstone \
 | Variable | Meaning |
 |---|---|
 | `LLM_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL` | primary provider (any OpenAI-compatible endpoint) |
+| `LLM_API_KEY_FALLBACK` | second key for the SAME provider, rotated to before the chain moves on |
 | `LLM_API_KEY_2`, `LLM_BASE_URL_2`, `LLM_MODEL_2` | second provider — automatic failover on 401/402/403/429 *and* on a dead endpoint |
 | `POSTGRES_DSN` | checkpointer DSN (compose uses `postgres:5432`) |
 | `API_TOKEN` / `APPROVAL_API_TOKEN` | service auth; **unset = endpoint closed (503)** |

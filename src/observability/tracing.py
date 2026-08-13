@@ -346,6 +346,7 @@ def write_react_transcript(
                 # Independent of decision_source BY DESIGN: a forced call must
                 # stay labelled forced even when the verdict later falls back.
                 "forced_first_call": bool(getattr(run, "forced_first_call", False)),
+                "final_answer": getattr(run, "final_answer", None),
                 "steps": [
                     {
                         "thought": getattr(step, "thought", "") or "",

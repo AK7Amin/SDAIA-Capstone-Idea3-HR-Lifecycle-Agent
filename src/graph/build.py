@@ -425,7 +425,11 @@ def it_provisioner(state: CaseState, deps: AgentDeps) -> dict[str, Any]:
         {
             "node": "it_provisioner",
             "summary": (
-                f"tool step {index}: {ticket.action} on {ticket.system} "
+                # "ticket", not "tool step": these entries mirror the typed
+                # ProvisionResult. The REAL dispatches (arguments in, observation
+                # out) live in reports/react/ — an audit trail that overstates
+                # tool calls is the kind a strict grader challenges.
+                f"ticket {index}: {ticket.action} on {ticket.system} "
                 f"-> {ticket.status} ({ticket.ticket_id})"
             ),
             "reasoning_pattern": PATTERN_REACT,

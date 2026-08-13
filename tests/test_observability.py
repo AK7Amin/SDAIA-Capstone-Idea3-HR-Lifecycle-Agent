@@ -727,3 +727,20 @@ class TestReactTranscriptIsPersisted:
         from src.observability import write_react_transcript
 
         assert write_react_transcript(tmp_path, "t", "c", []) is None
+
+    def test_transcript_carries_the_final_answer(self, tmp_path):
+        """One transcript with no final answer proved a tool ran but not what
+        it concluded — the artifact now closes its own story."""
+        import json
+
+        from src.observability import write_react_transcript
+
+        class _Run:
+            decision_source = "model"
+            forced_first_call = False
+            final_answer = '{"tickets": 5}'
+            steps = []
+
+        path = write_react_transcript(tmp_path, "t2", "C2", [_Run()])
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        assert doc["runs"][0]["final_answer"] == '{"tickets": 5}'
