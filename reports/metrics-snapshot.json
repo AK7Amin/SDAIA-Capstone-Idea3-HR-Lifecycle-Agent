@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-08-13T01:46:18Z",
+  "thread_ids": [
+    "run20260813T014527-def484-CAND-003"
+  ],
+  "usage": {
+    "total_tokens": 0,
+    "total_latency_ms": 0,
+    "total_ref_cost_usd": 0.0,
+    "per_node": {},
+    "per_case": {},
+    "per_provider": {}
+  },
+  "counters": {
+    "cases_processed_total": {
+      "offboarded": 1.0
+    },
+    "node_runs_total": {
+      "hr_gate": 1.0,
+      "offboard": 1.0
+    },
+    "guardrail_blocks_total": {},
+    "llm_failovers_total": {},
+    "case_latency_ms": {
+      "count": 1.0,
+      "sum": 236.645299999509
+    }
+  }
+}

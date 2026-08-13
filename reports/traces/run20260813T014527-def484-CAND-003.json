@@ -1,0 +1,88 @@
+{
+  "thread_id": "run20260813T014527-def484-CAND-003",
+  "case_id": "CAND-003",
+  "chain_intact": true,
+  "events": [
+    {
+      "node": "intake",
+      "summary": "intake validated for CAND-003",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "",
+      "digest": "1d4374145f433aabba7d7897cc751438d172225e9b67095ff440ef68019d2ccb"
+    },
+    {
+      "node": "profile_analyst",
+      "summary": "extraction attempt 1: profile complete",
+      "reasoning_pattern": "extraction",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "1d4374145f433aabba7d7897cc751438d172225e9b67095ff440ef68019d2ccb",
+      "digest": "769e096367d5a30e099271549b1934d7d9f06ac41a4b780b8b744b97b65d8ef3"
+    },
+    {
+      "node": "training_planner",
+      "summary": "planned 4 week(s)",
+      "reasoning_pattern": "plan-and-execute",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "769e096367d5a30e099271549b1934d7d9f06ac41a4b780b8b744b97b65d8ef3",
+      "digest": "a3191204bcfa16f57a1e4bbe280d34df0c467433b9ff7726e9fa1b4f54487491"
+    },
+    {
+      "node": "plan_reviewer",
+      "summary": "verdict 'revise' after 1 revision(s), 1 open concern(s)",
+      "reasoning_pattern": "reflexion",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "a3191204bcfa16f57a1e4bbe280d34df0c467433b9ff7726e9fa1b4f54487491",
+      "digest": "46b37144fb65bf992757ef0dca726ba7011bc2a21eec67e0800fa9add4ee8426"
+    },
+    {
+      "node": "training_planner",
+      "summary": "planned 4 week(s), addressing 1 reviewer concern(s)",
+      "reasoning_pattern": "plan-and-execute",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "46b37144fb65bf992757ef0dca726ba7011bc2a21eec67e0800fa9add4ee8426",
+      "digest": "02bfa1b19c755a435cda4b9dd01e156209bf0c2b0901cac769b0c95b6cf1ee2c"
+    },
+    {
+      "node": "plan_reviewer",
+      "summary": "verdict 'approve' after 1 revision(s), 1 open concern(s)",
+      "reasoning_pattern": "reflexion",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "02bfa1b19c755a435cda4b9dd01e156209bf0c2b0901cac769b0c95b6cf1ee2c",
+      "digest": "557c750522d404e24ada604a30c276262c42e66cd19d3a11b0a0bb2fdae78706"
+    },
+    {
+      "node": "contract_drafter",
+      "summary": "contract drafted for CAND-003 (QA Engineer); held in state until approval",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "557c750522d404e24ada604a30c276262c42e66cd19d3a11b0a0bb2fdae78706",
+      "digest": "85a1bd0dbf254b7dc0d324fe61583e75669aae0984ff129f5dff7fb65d4f7762"
+    },
+    {
+      "node": "hr_gate",
+      "summary": "human decision 'reject' by hr",
+      "reasoning_pattern": "human-in-the-loop",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "85a1bd0dbf254b7dc0d324fe61583e75669aae0984ff129f5dff7fb65d4f7762",
+      "digest": "6903050366ccc99a6f37d8e3e531f8c0a5ff4d5d4b85124a42bda64f422783f3"
+    },
+    {
+      "node": "offboard",
+      "summary": "offboarded: hr rejected the onboarding at the human gate; no documents produced",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "6903050366ccc99a6f37d8e3e531f8c0a5ff4d5d4b85124a42bda64f422783f3",
+      "digest": "da4333fa4e1b5af745581db1692a1e56d87752fcc00c71a4fde968092d430cec"
+    }
+  ]
+}

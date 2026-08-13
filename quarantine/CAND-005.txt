@@ -1,0 +1,8 @@
+Case CAND-005 was quarantined and did not proceed to onboarding.
+
+Reason: invalid intake: missing required field(s): name, role, start_date
+
+No contract, welcome pack, or IT provisioning was produced for this
+case.
+
+Synthetic training artifact — SDAIA Academy capstone.

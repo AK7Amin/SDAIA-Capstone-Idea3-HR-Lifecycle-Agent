@@ -1,0 +1,70 @@
+{
+  "thread_id": "run20260813T014516-d8da70-CAND-002",
+  "case_id": "CAND-002",
+  "chain_intact": true,
+  "events": [
+    {
+      "node": "intake",
+      "summary": "intake validated for CAND-002",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "",
+      "digest": "41eb34380b7cf6ba66ea7fbaae252609ad0f073c8424f6842594603684d78d53"
+    },
+    {
+      "node": "profile_analyst",
+      "summary": "extraction attempt 1: profile complete",
+      "reasoning_pattern": "extraction",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "41eb34380b7cf6ba66ea7fbaae252609ad0f073c8424f6842594603684d78d53",
+      "digest": "82cc51505d9d69f123dc6bd9515c8153d82a86ea1b5b09549de265333e2b5a2b"
+    },
+    {
+      "node": "training_planner",
+      "summary": "planned 4 week(s)",
+      "reasoning_pattern": "plan-and-execute",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "82cc51505d9d69f123dc6bd9515c8153d82a86ea1b5b09549de265333e2b5a2b",
+      "digest": "3fc8d8853de2aceb697d04a1308f327bf9561e944fbe9f14a9f454ce03cf06b5"
+    },
+    {
+      "node": "plan_reviewer",
+      "summary": "verdict 'revise' after 1 revision(s), 2 open concern(s)",
+      "reasoning_pattern": "reflexion",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "3fc8d8853de2aceb697d04a1308f327bf9561e944fbe9f14a9f454ce03cf06b5",
+      "digest": "0f437fe24384f90da3fc76d599a70afb9a99a441da74506e49d68d4d2cd328ff"
+    },
+    {
+      "node": "training_planner",
+      "summary": "planned 4 week(s), addressing 2 reviewer concern(s)",
+      "reasoning_pattern": "plan-and-execute",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "0f437fe24384f90da3fc76d599a70afb9a99a441da74506e49d68d4d2cd328ff",
+      "digest": "be95accbf148b0174b9dcb3659d543ba823c96a3158f87e01cbf14792a9ce1a3"
+    },
+    {
+      "node": "plan_reviewer",
+      "summary": "verdict 'approve' after 1 revision(s), 1 open concern(s)",
+      "reasoning_pattern": "reflexion",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "be95accbf148b0174b9dcb3659d543ba823c96a3158f87e01cbf14792a9ce1a3",
+      "digest": "e9d167510fa34181c5ba1ade4741863119f181da9b28876da0d300cb31837848"
+    },
+    {
+      "node": "contract_drafter",
+      "summary": "contract drafted for CAND-002 (Backend Developer); held in state until approval",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "e9d167510fa34181c5ba1ade4741863119f181da9b28876da0d300cb31837848",
+      "digest": "48ba7e5f9937e756a58e1759671cb5569aee343219529ad7a6369b4adf83687c"
+    }
+  ]
+}

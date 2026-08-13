@@ -1,0 +1,25 @@
+{
+  "thread_id": "run20260813T014549-f5f6e3-CAND-005",
+  "case_id": "CAND-005",
+  "chain_intact": true,
+  "events": [
+    {
+      "node": "intake",
+      "summary": "invalid intake: missing required field(s): name, role, start_date",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "",
+      "digest": "b8ef30faedaf3dead17ad839193508936e09fc3f74c90f4968c2f09a6097f0d5"
+    },
+    {
+      "node": "quarantine",
+      "summary": "quarantined: invalid intake: missing required field(s): name, role, start_date",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "b8ef30faedaf3dead17ad839193508936e09fc3f74c90f4968c2f09a6097f0d5",
+      "digest": "577024311e195eb21f7615f312e4e3df2bae52cc22d24a7446faab06b8bc36aa"
+    }
+  ]
+}

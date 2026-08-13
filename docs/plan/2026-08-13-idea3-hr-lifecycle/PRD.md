@@ -178,8 +178,9 @@ separate interview. demo.md covers the demo-script gap.
 | 8 | GREEN | 0/5 | 0/2 | — | (pair) | (pair) |
 | 9 | GREEN | 0/5 | 0/2 | — | a7b840d | 21f9353 |
 | 10 | GREEN | 0/5 | 0/2 | — | (pair) | (pair) |
-| 11 | running (agent) | 0/5 | 0/2 | — | | |
-| 12–15 | not started | 0/5 | 0/2 | — | | |
+| 11 | GREEN (xfail LIFTED — e2e live) | 0/5 | 0/2 | — | 03b70af | 20a5148 |
+| 12 | running (agent) | 0/5 | 0/2 | — | | |
+| 13–15 | not started | 0/5 | 0/2 | — | | |
 
 **Closing status**: (declared at phase-3 exit: SUCCESS / PARTIAL)
 

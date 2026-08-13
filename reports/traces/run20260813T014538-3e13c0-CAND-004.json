@@ -1,0 +1,70 @@
+{
+  "thread_id": "run20260813T014538-3e13c0-CAND-004",
+  "case_id": "CAND-004",
+  "chain_intact": true,
+  "events": [
+    {
+      "node": "intake",
+      "summary": "intake validated for CAND-004",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "",
+      "digest": "e720d6ab3ea7db729ba6fa9e57a685f1df476cd28bf9ade74218d027429e97c8"
+    },
+    {
+      "node": "profile_analyst",
+      "summary": "extraction attempt 1: profile complete",
+      "reasoning_pattern": "extraction",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "e720d6ab3ea7db729ba6fa9e57a685f1df476cd28bf9ade74218d027429e97c8",
+      "digest": "48526e673ecdfdaf020c309ec894f2520cda94f29d2c910916d44e3c603ad49b"
+    },
+    {
+      "node": "training_planner",
+      "summary": "planned 4 week(s)",
+      "reasoning_pattern": "plan-and-execute",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "48526e673ecdfdaf020c309ec894f2520cda94f29d2c910916d44e3c603ad49b",
+      "digest": "4c0635d50f9f13a2c3aab27c65bc2247f8dc75921cb033e1be6ce4ee976c8d34"
+    },
+    {
+      "node": "plan_reviewer",
+      "summary": "verdict 'revise' after 1 revision(s), 1 open concern(s)",
+      "reasoning_pattern": "reflexion",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "4c0635d50f9f13a2c3aab27c65bc2247f8dc75921cb033e1be6ce4ee976c8d34",
+      "digest": "fd8a365c93934515fcb6a4fadfbcd081e48b746a47e6c81faf699bff0c107048"
+    },
+    {
+      "node": "training_planner",
+      "summary": "planned 4 week(s), addressing 1 reviewer concern(s)",
+      "reasoning_pattern": "plan-and-execute",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "fd8a365c93934515fcb6a4fadfbcd081e48b746a47e6c81faf699bff0c107048",
+      "digest": "17193bf11459719047fd8141095171ff59c4edc2094f276f26382f300d218c05"
+    },
+    {
+      "node": "plan_reviewer",
+      "summary": "verdict 'approve' after 1 revision(s), 1 open concern(s)",
+      "reasoning_pattern": "reflexion",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "17193bf11459719047fd8141095171ff59c4edc2094f276f26382f300d218c05",
+      "digest": "6d499e4691dce4987068d8a580d1a7bfd49290acb77e7d15929b4d38bcf3776c"
+    },
+    {
+      "node": "contract_drafter",
+      "summary": "contract drafted for CAND-004 (Platform Engineer); held in state until approval",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "6d499e4691dce4987068d8a580d1a7bfd49290acb77e7d15929b4d38bcf3776c",
+      "digest": "b817a3e325f4e502179b3f47f2eaf15b0c6cfaa16e8c780d533712e6c8514ded"
+    }
+  ]
+}

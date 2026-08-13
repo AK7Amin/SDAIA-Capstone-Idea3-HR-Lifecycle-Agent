@@ -1,0 +1,12 @@
+=== HITL: each resume from a separate OS process ===
+parent capture PID: 28968
+checkpointer: postgres at postgresql://postgres:***@localhost:5433/hr_agent
+CAND-001  completed  thread=run20260813T014502-50d581-CAND-001
+    react: 2 tool step(s), decision_source=model, forced_first_call=True
+    documents: contract.md, welcome.md
+    trace: run20260813T014502-50d581-CAND-001.json
+
+checkpointer: postgres at postgresql://postgres:***@localhost:5433/hr_agent
+CAND-003  offboarded  thread=run20260813T014527-def484-CAND-003
+    documents: (none - not approved)
+    trace: run20260813T014527-def484-CAND-003.json
