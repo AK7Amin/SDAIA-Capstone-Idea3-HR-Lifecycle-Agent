@@ -17,15 +17,8 @@ Frozen contracts encoded here (critique round 1, B3/M13):
 Stubbed agents + sqlite checkpointer: zero network, zero Docker, zero keys.
 """
 import json
-from pathlib import Path
-
-import pytest
 
 
-@pytest.mark.xfail(
-    reason="RED by design: implementation not built yet (lifted by slice 11)",
-    strict=True,
-)
 def test_full_onboarding_cycle_pauses_resumes_and_produces_artifacts(
     tmp_path, monkeypatch
 ):
