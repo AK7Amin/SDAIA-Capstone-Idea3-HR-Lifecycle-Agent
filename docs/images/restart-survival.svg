@@ -1,19 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="298" viewBox="0 0 880 298">
-  <rect width="880" height="298" rx="10" fill="#0d1117"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="403" viewBox="0 0 880 403">
+  <rect width="880" height="403" rx="10" fill="#0d1117"/>
   <rect width="880" height="36" rx="10" fill="#161b22"/>
   <rect y="26" width="880" height="10" fill="#161b22"/>
   <circle cx="20" cy="18" r="6" fill="#ff5f57"/>
   <circle cx="40" cy="18" r="6" fill="#febc2e"/>
   <circle cx="60" cy="18" r="6" fill="#28c840"/>
   <text x="80" y="23" fill="#8b949e" font-family="Consolas,Menlo,monospace" font-size="12">restart survival — real capture (reports/logs/05-compose-up.log §7)</text>
-  <text x="22" y="79" fill="#8b949e" font-family="Consolas,Menlo,monospace" font-size="13.5">== RESTART SURVIVAL: pause -&gt; docker compose restart app -&gt; resume ==</text>
-<text x="22" y="100" fill="#d29922" font-family="Consolas,Menlo,monospace" font-size="13.5">paused: {&quot;status&quot;:&quot;awaiting_approval&quot;,&quot;thread_id&quot;:&quot;run...-RESTART-001&quot;, ...}</text>
-<text x="22" y="121" fill="#c9d1d9" font-family="Consolas,Menlo,monospace" font-size="13.5"></text>
-<text x="22" y="142" fill="#8b949e" font-family="Consolas,Menlo,monospace" font-size="13.5">$ docker compose restart app</text>
-<text x="22" y="163" fill="#c9d1d9" font-family="Consolas,Menlo,monospace" font-size="13.5">app       Up 8 seconds        # the process is gone; the state is not</text>
-<text x="22" y="184" fill="#c9d1d9" font-family="Consolas,Menlo,monospace" font-size="13.5"></text>
-<text x="22" y="205" fill="#c9d1d9" font-family="Consolas,Menlo,monospace" font-size="13.5">resuming the SAME thread after the restart:</text>
-<text x="22" y="226" fill="#3fb950" font-family="Consolas,Menlo,monospace" font-size="13.5">{&quot;status&quot;:&quot;completed&quot;,&quot;thread_id&quot;:&quot;run...-RESTART-001&quot;,&quot;audit_events&quot;:16}</text>
-<text x="22" y="247" fill="#8b949e" font-family="Consolas,Menlo,monospace" font-size="13.5">$ ls /data/outbox/RESTART-001/</text>
-<text x="22" y="268" fill="#3fb950" font-family="Consolas,Menlo,monospace" font-size="13.5">contract.md   welcome.md</text>
+<text x="22" y="79" fill="#8b949e" font-family="Consolas,Menlo,monospace" font-size="13.5">== 7) RESTART SURVIVAL: pause -&gt; docker compose restart app -&gt; resume ==</text>
+<text x="22" y="100" fill="#d29922" font-family="Consolas,Menlo,monospace" font-size="13.5">paused: {&quot;status&quot;:&quot;awaiting_approval&quot;,&quot;thread_id&quot;:&quot;run20260813T020436-589e94-RESTART-001&quot;,&quot;case_</text>
+<text x="22" y="121" fill="#c9d1d9" font-family="Consolas,Menlo,monospace" font-size="13.5">app container restarted (uptime resets):</text>
+<text x="22" y="142" fill="#8b949e" font-family="Consolas,Menlo,monospace" font-size="13.5"># the process is gone; the state is not</text>
+<text x="22" y="163" fill="#c9d1d9" font-family="Consolas,Menlo,monospace" font-size="13.5">SERVICE   STATUS</text>
+<text x="22" y="184" fill="#c9d1d9" font-family="Consolas,Menlo,monospace" font-size="13.5">app       Up 8 seconds</text>
+<text x="22" y="205" fill="#8b949e" font-family="Consolas,Menlo,monospace" font-size="13.5"># the process is gone; the state is not</text>
+<text x="22" y="226" fill="#c9d1d9" font-family="Consolas,Menlo,monospace" font-size="13.5">resuming the SAME thread after the restart:</text>
+<text x="22" y="247" fill="#3fb950" font-family="Consolas,Menlo,monospace" font-size="13.5">{&quot;status&quot;:&quot;completed&quot;,&quot;thread_id&quot;:&quot;run20260813T020436-589e94-RESTART-001&quot;,&quot;case_id&quot;:&quot;RESTART-001</text>
+<text x="22" y="268" fill="#3fb950" font-family="Consolas,Menlo,monospace" font-size="13.5">contract.md</text>
+<text x="22" y="289" fill="#c9d1d9" font-family="Consolas,Menlo,monospace" font-size="13.5">welcome.md</text>
+<text x="22" y="310" fill="#c9d1d9" font-family="Consolas,Menlo,monospace" font-size="13.5">SERVICE    STATUS</text>
+<text x="22" y="331" fill="#c9d1d9" font-family="Consolas,Menlo,monospace" font-size="13.5">app        Up 6 seconds (healthy)</text>
+<text x="22" y="352" fill="#8b949e" font-family="Consolas,Menlo,monospace" font-size="13.5"># the process is gone; the state is not</text>
+<text x="22" y="373" fill="#c9d1d9" font-family="Consolas,Menlo,monospace" font-size="13.5">postgres   Up 9 seconds (healthy)</text>
 </svg>
