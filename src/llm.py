@@ -326,7 +326,18 @@ class LLMClient:
 
     @classmethod
     def _should_failover(cls, exc: Exception) -> bool:
-        return cls._status_of(exc) in FAILOVER_STATUSES
+        # Quota/auth statuses rotate; and a provider that is DOWN has no HTTP
+        # status at all (connection refused, DNS death, timeout) — the chain
+        # must move on exactly as for a dead key. Found live: the failover
+        # demo pointed provider 1 at an unroutable port and the request died.
+        # An HTTP 500 (provider UP but erroring) still raises immediately:
+        # HTTPError carries a status and is checked before the URLError base.
+        status = cls._status_of(exc)
+        if status is not None:
+            return status in FAILOVER_STATUSES
+        import urllib.error
+
+        return isinstance(exc, (urllib.error.URLError, TimeoutError, ConnectionError, OSError))
 
     def _post_with_retry(
         self,
