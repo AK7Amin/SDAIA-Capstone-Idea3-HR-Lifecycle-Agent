@@ -24,7 +24,7 @@ We are glad you are joining us as **Backend Developer**, starting on
 - FastAPI
 - Postgres
 - Open-source contributor
-- testing culture
+- strong testing culture
 
 Your personalised training plan is attached to your onboarding case, and your
 manager will walk you through it during week one.

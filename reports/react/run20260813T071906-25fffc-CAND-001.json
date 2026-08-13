@@ -1,7 +1,7 @@
 {
-  "thread_id": "run20260813T033755-3f9587-CAND-001",
+  "thread_id": "run20260813T071906-25fffc-CAND-001",
   "case_id": "CAND-001",
-  "generated_at": "2026-08-13T03:38:50Z",
+  "generated_at": "2026-08-13T07:20:11Z",
   "runs": [
     {
       "decision_source": "model",

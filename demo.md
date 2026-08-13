@@ -7,7 +7,7 @@ output shown in `reports/logs/` — no slideware.
 
 - [ ] `docker start idea3-pg` (or `docker compose up -d postgres`) — the
       checkpointer must be reachable or the CLI exits 2 by design.
-- [ ] `pytest -q` once: 473 passing, zero network, zero keys.
+- [ ] `pytest -q` once: 480 passing, zero network, zero keys.
 - [ ] Open `reports/logs/01-live-run.log` in a second window as the fallback: if the
       provider rate-limits mid-demo, show the captured run instead of improvising.
 - [ ] **Never run two captures at once** — two runs of one case make two threads

@@ -1,18 +1,18 @@
 checkpointer: postgres at postgresql://postgres:***@localhost:5433/hr_agent
-CAND-001  completed  thread=run20260813T033755-3f9587-CAND-001
+CAND-001  completed  thread=run20260813T071906-25fffc-CAND-001
     react: 2 tool step(s), decision_source=model, forced_first_call=True
-    react transcript: run20260813T033755-3f9587-CAND-001.json
+    react transcript: run20260813T071906-25fffc-CAND-001.json
     documents: contract.md, welcome.md
-    trace: run20260813T033755-3f9587-CAND-001.json
+    trace: run20260813T071906-25fffc-CAND-001.json
 
 checkpointer: postgres at postgresql://postgres:***@localhost:5433/hr_agent
-CAND-002  completed  thread=run20260813T033809-f3ae83-CAND-002
+CAND-002  completed  thread=run20260813T071921-83c3cc-CAND-002
     react: 2 tool step(s), decision_source=model, forced_first_call=True
-    react transcript: run20260813T033809-f3ae83-CAND-002.json
+    react transcript: run20260813T071921-83c3cc-CAND-002.json
     documents: contract.md, welcome.md
-    trace: run20260813T033809-f3ae83-CAND-002.json
+    trace: run20260813T071921-83c3cc-CAND-002.json
 
 checkpointer: postgres at postgresql://postgres:***@localhost:5433/hr_agent
-CAND-003  offboarded  thread=run20260813T033822-cff7c6-CAND-003
+CAND-003  offboarded  thread=run20260813T071935-5fe325-CAND-003
     documents: (none - not approved)
-    trace: run20260813T033822-cff7c6-CAND-003.json
+    trace: run20260813T071935-5fe325-CAND-003.json

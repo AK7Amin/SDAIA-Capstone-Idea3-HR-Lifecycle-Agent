@@ -1,74 +1,80 @@
 {
-  "generated_at": "2026-08-13T03:38:56Z",
+  "generated_at": "2026-08-13T07:20:21Z",
   "thread_ids": [
-    "run20260813T033755-3f9587-CAND-001",
-    "run20260813T033809-f3ae83-CAND-002",
-    "run20260813T033822-cff7c6-CAND-003",
-    "run20260813T033832-8bddb9-CAND-004",
-    "run20260813T033845-8dc627-CAND-005"
+    "run20260813T071906-25fffc-CAND-001",
+    "run20260813T071921-83c3cc-CAND-002",
+    "run20260813T071935-5fe325-CAND-003",
+    "run20260813T071948-a28925-CAND-004",
+    "run20260813T072004-ad2174-CAND-005"
   ],
   "usage": {
-    "total_tokens": 18251,
-    "total_latency_ms": 49099,
-    "total_ref_cost_usd": 0.004189,
+    "total_tokens": 22076,
+    "total_latency_ms": 64854,
+    "total_ref_cost_usd": 0.005118,
     "per_node": {
       "profile_analyst": {
         "calls": 4,
-        "tokens": 2186,
-        "latency_ms": 5881,
-        "ref_cost_usd": 0.00047775
+        "tokens": 2190,
+        "latency_ms": 8323,
+        "ref_cost_usd": 0.00048015
       },
       "training_planner": {
         "calls": 8,
-        "tokens": 6652,
-        "latency_ms": 28876,
-        "ref_cost_usd": 0.0019761
+        "tokens": 6847,
+        "latency_ms": 32210,
+        "ref_cost_usd": 0.0020440499999999995
       },
       "plan_reviewer": {
         "calls": 8,
-        "tokens": 7684,
-        "latency_ms": 9605,
-        "ref_cost_usd": 0.00138255
+        "tokens": 7889,
+        "latency_ms": 11946,
+        "ref_cost_usd": 0.001461
       },
       "contract_drafter": {
         "calls": 4,
-        "tokens": 1729,
-        "latency_ms": 4737,
-        "ref_cost_usd": 0.00035295
+        "tokens": 1734,
+        "latency_ms": 4495,
+        "ref_cost_usd": 0.0003537
+      },
+      "it_provisioner": {
+        "calls": 4,
+        "tokens": 3416,
+        "latency_ms": 7880,
+        "ref_cost_usd": 0.00077835
       }
     },
     "per_case": {
       "CAND-001": {
-        "calls": 6,
-        "tokens": 4837,
-        "latency_ms": 13494,
-        "ref_cost_usd": 0.00111885
+        "calls": 8,
+        "tokens": 6664,
+        "latency_ms": 18355,
+        "ref_cost_usd": 0.00155265
       },
       "CAND-002": {
-        "calls": 6,
-        "tokens": 4590,
-        "latency_ms": 12575,
-        "ref_cost_usd": 0.0010516500000000001
+        "calls": 8,
+        "tokens": 6250,
+        "latency_ms": 17573,
+        "ref_cost_usd": 0.0014252999999999998
       },
       "CAND-003": {
         "calls": 6,
-        "tokens": 4252,
-        "latency_ms": 9922,
-        "ref_cost_usd": 0.0009662999999999999
+        "tokens": 4401,
+        "latency_ms": 12999,
+        "ref_cost_usd": 0.00102645
       },
       "CAND-004": {
         "calls": 6,
-        "tokens": 4572,
-        "latency_ms": 13108,
-        "ref_cost_usd": 0.00105255
+        "tokens": 4761,
+        "latency_ms": 15927,
+        "ref_cost_usd": 0.0011128499999999999
       }
     },
     "per_provider": {
       "mistral": {
-        "calls": 24,
-        "tokens": 18251,
-        "latency_ms": 49099,
-        "ref_cost_usd": 0.00418935
+        "calls": 28,
+        "tokens": 22076,
+        "latency_ms": 64854,
+        "ref_cost_usd": 0.00511725
       }
     }
   },
@@ -98,7 +104,7 @@
     "llm_failovers_total": {},
     "case_latency_ms": {
       "count": 8.0,
-      "sum": 56004.62670002889
+      "sum": 66795.75640000985
     }
   }
 }

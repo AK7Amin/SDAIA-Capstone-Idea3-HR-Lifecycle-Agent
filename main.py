@@ -218,7 +218,7 @@ def cmd_run(args: argparse.Namespace) -> int:
                     case_file,
                     wiring.graph,
                     reports_dir=reports,
-                    meter_snapshot=wiring.meter_snapshot(),
+                    meter_snapshot=wiring.meter_snapshot,
                 )
             except REFUSAL_ERRORS as exc:
                 refused += 1
@@ -266,7 +266,9 @@ def cmd_resume(args: argparse.Namespace) -> int:
             args.decision,
             wiring.graph,
             reports_dir=Path(args.reports) if args.reports else None,
-            meter_snapshot=wiring.meter_snapshot(),
+            # the METHOD, not its result: resume_case resolves it after the
+            # graph runs, so the provisioner's usage lands in the ledger.
+            meter_snapshot=wiring.meter_snapshot,
         )
         say(
             f"{result['case_id']}  {result['status']}  "

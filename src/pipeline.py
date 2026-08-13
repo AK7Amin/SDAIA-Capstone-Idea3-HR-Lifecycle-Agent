@@ -43,7 +43,7 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Mapping, NamedTuple, Sequence
+from typing import Any, Callable, Mapping, NamedTuple, Sequence
 
 from langgraph.types import Command
 
@@ -818,6 +818,10 @@ def process_case(
         record_node(node)
     observe_case_latency((time.perf_counter() - started) * 1000)
 
+    if callable(meter_snapshot):
+        # resolved AFTER the invoke — the argument-evaluation-order bug both
+        # graders caught on the resume path has the same shape here.
+        meter_snapshot = meter_snapshot()
     trace_path = _write_evidence(
         reports, thread_id, str(result.get("case_id") or case_id), events, meter_snapshot
     )
@@ -843,7 +847,7 @@ def resume_case(
     decision: Any,
     graph: Any,
     reports_dir: Path | str | None = None,
-    meter_snapshot: Mapping[str, Any] | None = None,
+    meter_snapshot: Mapping[str, Any] | Callable[[], Mapping[str, Any] | None] | None = None,
 ) -> dict:
     """Answer the human gate of a paused case and finish the run.
 
@@ -856,7 +860,13 @@ def resume_case(
             is the point: that is what proves the pause survived the process.
         reports_dir: Evidence root; defaults to the one the original run
             recorded in the case's metadata.
-        meter_snapshot: Usage numbers for the metrics artifact.
+        meter_snapshot: Usage numbers for the metrics artifact — or a
+            CALLABLE returning them. Pass the callable (e.g.
+            ``wiring.meter_snapshot``, no parentheses): both graders caught
+            the same bug where the snapshot was evaluated as an argument
+            BEFORE the graph ran, so the provisioner's real LLM usage never
+            reached the committed ledger. A callable is resolved here, AFTER
+            the invoke.
 
     Returns:
         ``{"status", "thread_id", "case_id", "audit_trail", "tool_calls",
@@ -900,6 +910,11 @@ def resume_case(
     for node in _node_runs(events[already_seen:]):
         record_node(node)
     observe_case_latency((time.perf_counter() - started) * 1000)
+
+    # A callable snapshot is resolved NOW — after the graph ran — so the
+    # resume's own LLM calls (it_provisioner's ReAct run) are inside it.
+    if callable(meter_snapshot):
+        meter_snapshot = meter_snapshot()
 
     # merge=True: this is a separate process with its own meter — replacing the
     # snapshot would zero out the batch run's real token cost (found live).

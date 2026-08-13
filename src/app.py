@@ -436,7 +436,7 @@ def create_app() -> FastAPI:
                 case_file,
                 state.wiring.graph,
                 reports_dir=state.reports_dir,
-                meter_snapshot=state.wiring.meter_snapshot(),
+                meter_snapshot=state.wiring.meter_snapshot,
             )
         except InputTooLarge:
             raise HTTPException(
@@ -479,7 +479,7 @@ def create_app() -> FastAPI:
                 payload.thread_id,
                 payload.decision,
                 state.wiring.graph,
-                meter_snapshot=state.wiring.meter_snapshot(),
+                meter_snapshot=state.wiring.meter_snapshot,
             )
         except ValueError:
             # One message for both causes on purpose: "unknown thread" and

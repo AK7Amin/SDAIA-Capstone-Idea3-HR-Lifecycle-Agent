@@ -1,6 +1,6 @@
 # Employee Onboarding & Lifecycle Agent
 
-![tests](https://img.shields.io/badge/tests-477%20passing-3fb950) ![python](https://img.shields.io/badge/python-3.12-3572A5) ![langgraph](https://img.shields.io/badge/LangGraph-1.x-blue) ![checkpointer](https://img.shields.io/badge/checkpointer-PostgresSaver-336791) ![deploy](https://img.shields.io/badge/deploy-docker--compose-2496ED)
+![tests](https://img.shields.io/badge/tests-480%20passing-3fb950) ![python](https://img.shields.io/badge/python-3.12-3572A5) ![langgraph](https://img.shields.io/badge/LangGraph-1.x-blue) ![checkpointer](https://img.shields.io/badge/checkpointer-PostgresSaver-336791) ![deploy](https://img.shields.io/badge/deploy-docker--compose-2496ED)
 
 A multi-agent system that runs the HR onboarding lifecycle end to end: when a
 candidate is marked **hired**, specialized agents analyze the résumé, design a
@@ -9,7 +9,7 @@ personalized training plan, critique and revise it, draft the contract notice,
 documents — with tamper-evident audit trails, input/output guardrails, and
 state that survives a restart.
 
-**Author**: Abdulaziz — [@AK7Amin](https://github.com/AK7Amin)
+**Author**: عبدالعزيز مُليا — [@AK7Amin](https://github.com/AK7Amin)
 
 **The problem.** When HR marks a candidate *hired*, a chain of slow manual
 work begins: reading the résumé, designing training, drafting the contract,
@@ -39,7 +39,7 @@ Verify it yourself in one minute — no keys, no Docker, no network:
 
 ```bash
 pip install -r requirements-dev.txt
-pytest -q                      # 477 tests
+pytest -q                      # 480 tests
 python main.py verify-traces   # recomputes every audit hash chain from disk
 ```
 
@@ -78,19 +78,25 @@ flowchart TD
     START([hired candidate JSON]) --> G[guards: size · injection · PII mask]
     G --> intake
     intake -->|valid| profile_analyst
-    intake -->|invalid metadata| quarantine([quarantine])
-    profile_analyst -->|profile complete| training_planner
-    profile_analyst -->|missing fields, attempts < 2| profile_analyst
+    intake -->|invalid| quarantine([quarantine])
+    profile_analyst -->|complete| training_planner
+    profile_analyst -->|"retry (max 2)"| profile_analyst
     profile_analyst -->|exhausted| quarantine
     training_planner --> plan_reviewer[plan_reviewer — Reflexion critic]
-    plan_reviewer -->|revise, once| training_planner
-    plan_reviewer -->|approve / exhausted + concerns| contract_drafter
-    contract_drafter -->|draft in STATE only — nothing on disk| hr_gate{{hr_gate — interrupt, human approval}}
+    plan_reviewer -->|"revise (once)"| training_planner
+    plan_reviewer -->|approve| contract_drafter
+    contract_drafter -->|state-only draft| hr_gate{{hr_gate — interrupt, human approval}}
     hr_gate -->|approve| it_provisioner[it_provisioner — ReAct + tools]
     hr_gate -->|reject| offboard([offboard])
     it_provisioner --> notifier
     notifier --> DONE([contract.md + welcome.md + IT tickets])
 ```
+
+Edge conditions in full (kept out of the diagram so labels stay readable):
+re-extract retries at most **2** then quarantines; the reviewer may demand
+**one** revision, and an exhausted reviewer forwards to the drafter **with its
+concerns attached** for the human to see; the drafter writes **nothing to
+disk** — files exist only after `hr_gate` approves.
 
 The same diagram, generated **from the compiled graph itself** (not hand-drawn),
 is in [`capstone.ipynb`](capstone.ipynb) §4.
@@ -173,7 +179,7 @@ python main.py verify-traces                # independent audit-chain verificati
 python main.py demo-failover                # provider chain failing over
 ```
 
-Expected output of `run` (verbatim from [`reports/logs/01-live-run.log`](reports/logs/01-live-run.log)):
+Expected output of `run` (excerpt from [`reports/logs/01-live-run.log`](reports/logs/01-live-run.log)):
 
 ```text
 CAND-002  awaiting_approval  thread=run20260813T033809-f3ae83-CAND-002
@@ -204,9 +210,9 @@ curl -s -X POST localhost:8000/process -H "X-Api-Token: $API_TOKEN" \
 | Metric | Value |
 |---|---|
 | Candidates processed | 5 (clean hire, injected résumé, sparse, PII-heavy, invalid intake) |
-| Model calls / tokens | 24 calls · 18,251 tokens (Mistral) |
+| Model calls / tokens | 28 calls · 22,076 tokens (Mistral) — full lifecycle incl. resume-phase provisioning |
 | Traces, all chain-verified | 5/5 |
-| Tests | **477** offline + 4 Docker-marked |
+| Tests | **480** offline + 4 Docker-marked |
 
 ## Saved evidence (`reports/`)
 
@@ -244,6 +250,19 @@ failing first, then the minimal implementation:
 | guardrails | `05f5743` | `ec50356` |
 
 (48+ incremental commits; full run log in [`docs/plan/`](docs/plan/2026-08-13-idea3-hr-lifecycle/).)
+
+## Team
+
+SDAIA Academy cohort team — each member built his own capstone idea;
+this repository is Idea 3:
+
+| | |
+|---|---|
+| **عبدالعزيز مُليا** | this repo — [@AK7Amin](https://github.com/AK7Amin) |
+| فارس الرشيد | teammate |
+| ريان شريفي | teammate |
+| محمد الشدي | teammate |
+| فيصل الحقباني | teammate |
 
 ## Repository layout
 

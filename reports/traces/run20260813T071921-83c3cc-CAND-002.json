@@ -1,5 +1,5 @@
 {
-  "thread_id": "run20260813T033809-f3ae83-CAND-002",
+  "thread_id": "run20260813T071921-83c3cc-CAND-002",
   "case_id": "CAND-002",
   "chain_intact": true,
   "events": [
@@ -104,12 +104,12 @@
     },
     {
       "node": "it_provisioner",
-      "summary": "ticket 4: REQUEST create vpn access (POL-004) on vpn -> requested (CAND-002-IT-04)",
+      "summary": "ticket 4: REQUEST create VPN access (POL-004) on vpn -> requested (CAND-002-IT-04)",
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
       "prev_hash": "a7da84e4a4be50bf5b6e73a36789c31456a11888162d240b66b37d78f18521d6",
-      "digest": "2e710aa63ff2f51c26295205269447f771aea31d517a803fae9d0656a9140758"
+      "digest": "eed9a2cb100dbf20b6b09af7efb2358999b7f8edcbff973f5ded859ad1fded25"
     },
     {
       "node": "it_provisioner",
@@ -117,8 +117,8 @@
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "2e710aa63ff2f51c26295205269447f771aea31d517a803fae9d0656a9140758",
-      "digest": "4dcf0db954d99bba64b1f4eec80f68b56d9cc11aee2c77b9374f47bb44b6ce58"
+      "prev_hash": "eed9a2cb100dbf20b6b09af7efb2358999b7f8edcbff973f5ded859ad1fded25",
+      "digest": "688431751598997c96db7925c12931de135786f025b72465f276b3323a0b2ebc"
     },
     {
       "node": "it_provisioner",
@@ -126,8 +126,8 @@
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "4dcf0db954d99bba64b1f4eec80f68b56d9cc11aee2c77b9374f47bb44b6ce58",
-      "digest": "4c83874b3e40b0cc53bdfd3979fdfb68fde8808c2bc76e3c61190b0ffc89ccd4"
+      "prev_hash": "688431751598997c96db7925c12931de135786f025b72465f276b3323a0b2ebc",
+      "digest": "6945cfc30e1eeb7002125a4c5b841d1752044281c5bfe778ec78fec599de373f"
     },
     {
       "node": "notifier",
@@ -135,8 +135,8 @@
       "reasoning_pattern": "",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "4c83874b3e40b0cc53bdfd3979fdfb68fde8808c2bc76e3c61190b0ffc89ccd4",
-      "digest": "2f3f30ad73e377c96c2730c1764f2d15466ddf0521d70c3b30da4bd28044835b"
+      "prev_hash": "6945cfc30e1eeb7002125a4c5b841d1752044281c5bfe778ec78fec599de373f",
+      "digest": "57c2290fe37558bf095112231b1c2791bacadf6a2f30b2589c7c5d4fcc8036ca"
     },
     {
       "node": "notifier",
@@ -144,8 +144,8 @@
       "reasoning_pattern": "",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "2f3f30ad73e377c96c2730c1764f2d15466ddf0521d70c3b30da4bd28044835b",
-      "digest": "9a62b2b2f8959acf967d104a60854a3deaa7f3c552560c774a09b1d9f8b1efcf"
+      "prev_hash": "57c2290fe37558bf095112231b1c2791bacadf6a2f30b2589c7c5d4fcc8036ca",
+      "digest": "d91eeea75f5e895677e0c4a82a776c7b7cb2e4deb9d8293d565274e06b2f3758"
     }
   ]
 }

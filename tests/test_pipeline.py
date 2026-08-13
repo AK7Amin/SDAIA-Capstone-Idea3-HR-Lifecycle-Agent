@@ -755,3 +755,78 @@ class TestMergedSnapshotIsInternallyConsistent:
             }, merge=True)
         usage = json.loads((reports / "metrics-snapshot.json").read_text(encoding="utf-8"))["usage"]
         assert usage["total_tokens"] == sum(b["tokens"] for b in usage["per_node"].values())
+
+
+class TestResumeMeterTiming:
+    """Both independent graders found the same bug: cmd_resume and /resume
+    evaluated `meter_snapshot=wiring.meter_snapshot()` BEFORE the graph ran,
+    so it_provisioner's real LLM usage never reached the committed ledger —
+    per_node listed 4 agents while the react transcripts proved a 5th called
+    the model. The snapshot must be taken AFTER the resume invokes the graph."""
+
+    def _paused_case(self, tmp_path):
+        import json
+
+        from src.effects import FileEffects
+        from src.pipeline import build_graph_with_stubs, process_case
+
+        case = tmp_path / "intake" / "CAND-T.json"
+        case.parent.mkdir(parents=True)
+        case.write_text(json.dumps({
+            "candidate_id": "CAND-T", "name": "Timing Test", "role": "Data Engineer",
+            "start_date": "2026-09-01", "resume_text": "Five years of pipelines.",
+        }), encoding="utf-8")
+        effects = FileEffects(tmp_path)
+        graph = build_graph_with_stubs(effects=effects, checkpoint_db=tmp_path / "s.sqlite")
+        result = process_case(case, graph=graph)
+        return result["thread_id"], graph
+
+    def test_callable_snapshot_is_taken_after_the_graph_runs(self, tmp_path):
+        """resume_case accepts a CALLABLE and must call it post-invoke."""
+        import json
+
+        from src.pipeline import resume_case
+
+        thread_id, graph = self._paused_case(tmp_path)
+        calls = {"n": 0, "invoked_before_snapshot": None}
+        real_invoke = graph.invoke
+
+        def spying_invoke(*a, **k):
+            calls["n"] += 1
+            return real_invoke(*a, **k)
+
+        graph.invoke = spying_invoke
+
+        def snapshot_provider():
+            # the whole point: by snapshot time, the graph must have run
+            calls["invoked_before_snapshot"] = calls["n"] > 0
+            return {"total_tokens": 111, "per_node": {"it_provisioner": {"calls": 1, "tokens": 111}}}
+
+        resume_case(thread_id, "approve", graph=graph, meter_snapshot=snapshot_provider)
+        assert calls["invoked_before_snapshot"] is True, (
+            "snapshot was taken BEFORE the resume ran the graph — the ledger bug"
+        )
+        metrics = json.loads(
+            (tmp_path / "reports" / "metrics-snapshot.json").read_text(encoding="utf-8")
+        )
+        assert "it_provisioner" in metrics["usage"]["per_node"]
+
+    def test_cli_passes_the_method_not_its_result(self):
+        """The seam itself: main.py must hand resume_case the callable."""
+        import inspect
+
+        import main as cli
+
+        src = inspect.getsource(cli.cmd_resume)
+        assert "meter_snapshot=wiring.meter_snapshot()" not in src, (
+            "cmd_resume still evaluates the snapshot before resume_case runs"
+        )
+        assert "meter_snapshot=wiring.meter_snapshot" in src
+
+    def test_service_passes_the_method_not_its_result(self):
+        import inspect
+
+        from src import app as service
+
+        src = inspect.getsource(service)
+        assert "meter_snapshot=wiring.meter_snapshot()" not in src.replace(" ", "")
