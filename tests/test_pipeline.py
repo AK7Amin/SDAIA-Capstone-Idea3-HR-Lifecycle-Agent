@@ -627,3 +627,55 @@ def test_cli_without_a_command_explains_itself_instead_of_crashing(capsys):
     captured = capsys.readouterr()
     assert code != 0
     assert "usage" in (captured.out + captured.err).lower()
+
+
+class TestResumeDoesNotClobberRunMetrics:
+    """A resume runs in a FRESH process with a FRESH meter. Replacing the
+    snapshot there wiped the batch run's real token cost — the evidence file
+    read zeros after every approval. Found live during the final capture."""
+
+    def test_resume_merges_usage_into_the_existing_snapshot(self, tmp_path):
+        import json
+
+        from src.pipeline import write_run_summary
+
+        reports = tmp_path / "reports"
+        (reports / "traces").mkdir(parents=True)
+
+        run_usage = {
+            "total_tokens": 4200,
+            "total_latency_ms": 9000,
+            "per_node": {"profile_analyst": {"calls": 3, "tokens": 4200}},
+            "per_provider": {"mistral": {"calls": 3, "tokens": 4200}},
+        }
+        write_run_summary(reports, ["t-1", "t-2"], run_usage)
+
+        resume_usage = {
+            "total_tokens": 800,
+            "total_latency_ms": 1500,
+            "per_node": {"it_provisioner": {"calls": 2, "tokens": 800}},
+            "per_provider": {"mistral": {"calls": 2, "tokens": 800}},
+        }
+        write_run_summary(reports, ["t-1"], resume_usage, merge=True)
+
+        snap = json.loads((reports / "metrics-snapshot.json").read_text(encoding="utf-8"))
+        usage = snap["usage"]
+        assert usage["total_tokens"] == 5000            # summed, not replaced
+        assert usage["per_node"]["profile_analyst"]["calls"] == 3   # run kept
+        assert usage["per_node"]["it_provisioner"]["calls"] == 2    # resume added
+        assert usage["per_provider"]["mistral"]["calls"] == 5       # both
+        assert snap["thread_ids"] == ["t-1", "t-2"]     # union, order kept, no dupes
+
+    def test_plain_write_still_replaces(self, tmp_path):
+        """The batch runner must be able to declare the whole run's numbers."""
+        import json
+
+        from src.pipeline import write_run_summary
+
+        reports = tmp_path / "reports"
+        (reports / "traces").mkdir(parents=True)
+        write_run_summary(reports, ["t-1"], {"total_tokens": 999})
+        write_run_summary(reports, ["t-2"], {"total_tokens": 5})
+        snap = json.loads((reports / "metrics-snapshot.json").read_text(encoding="utf-8"))
+        assert snap["usage"]["total_tokens"] == 5
+        assert snap["thread_ids"] == ["t-2"]

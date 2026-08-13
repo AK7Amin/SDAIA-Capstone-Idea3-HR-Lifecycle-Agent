@@ -578,6 +578,8 @@ def write_run_summary(
     reports_dir: Path | str,
     thread_ids: Sequence[str],
     meter_snapshot: Mapping[str, Any] | None = None,
+    *,
+    merge: bool = False,
 ) -> Path:
     """Rewrite the metrics snapshot and the dashboard for a whole run.
 
@@ -591,21 +593,78 @@ def write_run_summary(
     files back off the disk. Rendering the page from live objects instead would
     produce something that looked healthy next to stale files.
 
+    ``merge=True`` folds this call's thread ids and usage numbers INTO the
+    snapshot already on disk instead of replacing it. A resume runs in a fresh
+    process with a fresh meter; without merging, it would clobber the batch
+    run's real token cost with its own near-empty one — found live, the metrics
+    artifact read zeros after every resume.
+
     Args:
         reports_dir: Evidence root.
-        thread_ids: Every thread this run produced.
+        thread_ids: Every thread this call produced.
         meter_snapshot: :meth:`src.llm.UsageMeter.snapshot` output, if any.
+        merge: Accumulate into the existing snapshot rather than replace it.
 
     Returns:
         Path of the rendered dashboard.
     """
     reports_dir = Path(reports_dir)
-    write_metrics_snapshot(reports_dir, meter_snapshot, thread_ids)
+    thread_ids = list(thread_ids)
+    snapshot = dict(meter_snapshot or {})
+    if merge:
+        prior = _load_metrics(reports_dir)
+        thread_ids = _union_preserving_order(prior.get("thread_ids", []), thread_ids)
+        snapshot = _add_usage(prior.get("usage") or {}, snapshot)
+    write_metrics_snapshot(reports_dir, snapshot, thread_ids)
     return render_dashboard(
         reports_dir / METRICS_FILENAME,
         reports_dir / TRACES_DIRNAME,
         reports_dir / DASHBOARD_FILENAME,
     )
+
+
+def _load_metrics(reports_dir: Path) -> dict:
+    """The metrics snapshot already on disk, or an empty shell."""
+    path = Path(reports_dir) / METRICS_FILENAME
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def _union_preserving_order(existing: Sequence[str], new: Sequence[str]) -> list[str]:
+    seen: dict[str, None] = {}
+    for tid in (*existing, *new):
+        seen[str(tid)] = None
+    return list(seen)
+
+
+def _add_usage(base: Mapping[str, Any], extra: Mapping[str, Any]) -> dict:
+    """Sum two UsageMeter snapshots (per-node/case/provider and totals).
+
+    A resume's LLM calls are real cost and belong in the run's total; the
+    per-bucket breakdowns are unioned key by key.
+    """
+    if not base:
+        return dict(extra)
+    if not extra:
+        return dict(base)
+    merged: dict[str, Any] = {}
+    for key in ("total_tokens", "total_latency_ms", "total_calls"):
+        merged[key] = (base.get(key) or 0) + (extra.get(key) or 0)
+    for bucket in ("per_node", "per_case", "per_provider"):
+        out: dict[str, dict] = {k: dict(v) for k, v in (base.get(bucket) or {}).items()}
+        for name, stats in (extra.get(bucket) or {}).items():
+            slot = out.setdefault(name, {})
+            for field, value in stats.items():
+                slot[field] = (slot.get(field) or 0) + value
+        merged[bucket] = out
+    # carry any keys we didn't explicitly sum (e.g. total_ref_cost_usd)
+    for key, value in {**base, **extra}.items():
+        merged.setdefault(key, value)
+    return merged
 
 
 def _write_evidence(
@@ -614,10 +673,16 @@ def _write_evidence(
     case_id: str,
     events: Sequence[AuditEvent],
     meter_snapshot: Mapping[str, Any] | None,
+    *,
+    merge: bool = False,
 ) -> Path:
-    """This case's trace, then the run artifacts that summarise it."""
+    """This case's trace, then the run artifacts that summarise it.
+
+    ``merge`` is set on the resume path: a resume is a fresh process whose
+    meter would otherwise overwrite the batch run's real token cost with zero.
+    """
     trace_path = write_trace(Path(reports_dir), thread_id, case_id, events)
-    write_run_summary(reports_dir, [thread_id], meter_snapshot)
+    write_run_summary(reports_dir, [thread_id], meter_snapshot, merge=merge)
     return trace_path
 
 
@@ -798,9 +863,11 @@ def resume_case(
         record_node(node)
     observe_case_latency((time.perf_counter() - started) * 1000)
 
+    # merge=True: this is a separate process with its own meter — replacing the
+    # snapshot would zero out the batch run's real token cost (found live).
     trace_path = _write_evidence(
         reports, str(thread_id), str(final.get("case_id") or case_id), events,
-        meter_snapshot,
+        meter_snapshot, merge=True,
     )
 
     return {
