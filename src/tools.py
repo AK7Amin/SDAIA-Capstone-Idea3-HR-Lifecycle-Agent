@@ -363,6 +363,7 @@ _OFFSET = re.compile(
     re.IGNORECASE,
 )
 # `<date> - <date>` — how many days between two dates.
+_ISO_ONLY = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 _DIFF = re.compile(r"^(?P<a>\d{4}-\d{2}-\d{2})\s*-\s*(?P<b>\d{4}-\d{2}-\d{2})$")
 
 
@@ -434,6 +435,13 @@ def build_hr_registry(policy_dir: Path | str | None = None) -> ToolRegistry:
         if diff:
             days = (_parse_iso(diff["a"]) - _parse_iso(diff["b"])).days
             return f"{days} days"
+
+        # A bare ISO date is a degenerate valid expression (date + 0 days).
+        # Both committed live transcripts showed the model asking exactly
+        # this and getting an error back — a tolerant tool beats a failed
+        # dispatch, and the calendar is still validated (2026-02-30 raises).
+        if _ISO_ONLY.match(text):
+            return _parse_iso(text).isoformat()
 
         offset = _OFFSET.match(text)
         if not offset:

@@ -1,5 +1,5 @@
 {
-  "thread_id": "run20260813T033116-78a154-CAND-001",
+  "thread_id": "run20260813T033755-3f9587-CAND-001",
   "case_id": "CAND-001",
   "chain_intact": true,
   "events": [
@@ -32,21 +32,21 @@
     },
     {
       "node": "plan_reviewer",
-      "summary": "verdict 'revise' after 1 revision(s), 2 open concern(s)",
+      "summary": "verdict 'revise' after 1 revision(s), 1 open concern(s)",
       "reasoning_pattern": "reflexion",
       "cost_usd": 0.0,
       "latency_ms": 0,
       "prev_hash": "c9847ba1a07ad7bddfdb3dc85cc728476365c45907db498eb8867a76290bfa89",
-      "digest": "dbc0c79a6ac1a71d407b0c2335e7c278ed382ac9927760aa0ef8818e42e3e891"
+      "digest": "821a239c8e62134538956fb29444061821164fb8d4e3659b707cd739f2891e32"
     },
     {
       "node": "training_planner",
-      "summary": "planned 4 week(s), addressing 2 reviewer concern(s)",
+      "summary": "planned 4 week(s), addressing 1 reviewer concern(s)",
       "reasoning_pattern": "plan-and-execute",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "dbc0c79a6ac1a71d407b0c2335e7c278ed382ac9927760aa0ef8818e42e3e891",
-      "digest": "4bb891cc98e791e6080c9df89e9ad14295e2f9b0166509a8993850351a0ee8a6"
+      "prev_hash": "821a239c8e62134538956fb29444061821164fb8d4e3659b707cd739f2891e32",
+      "digest": "9c30deba7440971d79461339243e3d34aea1da8f451eb115ef207469cdb1d4de"
     },
     {
       "node": "plan_reviewer",
@@ -54,8 +54,8 @@
       "reasoning_pattern": "reflexion",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "4bb891cc98e791e6080c9df89e9ad14295e2f9b0166509a8993850351a0ee8a6",
-      "digest": "b44e6a2d8bded2de9406b0c04f9c2f17f33a5cdb39a3ee0be039b21caaed20b4"
+      "prev_hash": "9c30deba7440971d79461339243e3d34aea1da8f451eb115ef207469cdb1d4de",
+      "digest": "82d4979d8a997d43527f7983e54ca955a2c7c1aeb546e04049b453f6a9cea4ea"
     },
     {
       "node": "contract_drafter",
@@ -63,8 +63,8 @@
       "reasoning_pattern": "",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "b44e6a2d8bded2de9406b0c04f9c2f17f33a5cdb39a3ee0be039b21caaed20b4",
-      "digest": "48eb50f7a738fba0d0cd8d8368cda9a35addf62fad18e9dc4c4896530bb80d10"
+      "prev_hash": "82d4979d8a997d43527f7983e54ca955a2c7c1aeb546e04049b453f6a9cea4ea",
+      "digest": "480eb02a6ded65b6ca595237ec97f4d8c92bfb2115d59d0a6ea321f7810c00a1"
     },
     {
       "node": "hr_gate",
@@ -72,8 +72,8 @@
       "reasoning_pattern": "human-in-the-loop",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "48eb50f7a738fba0d0cd8d8368cda9a35addf62fad18e9dc4c4896530bb80d10",
-      "digest": "7f60a6bc3c7637ed33ee651e8302f901799646b5910097254a99f3f23af12ee6"
+      "prev_hash": "480eb02a6ded65b6ca595237ec97f4d8c92bfb2115d59d0a6ea321f7810c00a1",
+      "digest": "3306e12f9c9d52a891ce6790170786aafc3341e6e803716069d25b354979f4d5"
     },
     {
       "node": "it_provisioner",
@@ -81,8 +81,8 @@
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "7f60a6bc3c7637ed33ee651e8302f901799646b5910097254a99f3f23af12ee6",
-      "digest": "afd1e66226fe9775907ebbf941365cff28117f604c0b39b276f937b0141d9bb4"
+      "prev_hash": "3306e12f9c9d52a891ce6790170786aafc3341e6e803716069d25b354979f4d5",
+      "digest": "7d504fc59b18fae423a1210455a3fb3d72c01dd05c8cbeca0bc1cba559a3be86"
     },
     {
       "node": "it_provisioner",
@@ -90,35 +90,35 @@
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "afd1e66226fe9775907ebbf941365cff28117f604c0b39b276f937b0141d9bb4",
-      "digest": "60f1bf0540beae6e1a892345fa6a018c987da7b8e168e8c22d04f1033719d0f9"
+      "prev_hash": "7d504fc59b18fae423a1210455a3fb3d72c01dd05c8cbeca0bc1cba559a3be86",
+      "digest": "048f581886d969f785543a0bbca6bfcaab3fe35b0582654c0ccda22397a1f210"
     },
     {
       "node": "it_provisioner",
-      "summary": "ticket 3: REQUEST allocate developer laptop 32 GB + external monitor (POL-003) on hardware -> requested (CAND-001-IT-03)",
+      "summary": "ticket 3: REQUEST create repository access (POL-004) on repository -> requested (CAND-001-IT-03)",
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "60f1bf0540beae6e1a892345fa6a018c987da7b8e168e8c22d04f1033719d0f9",
-      "digest": "e0af1528d862dd6a5c6548480019b28f2833b9c067aa483c018337dc7d5650f9"
+      "prev_hash": "048f581886d969f785543a0bbca6bfcaab3fe35b0582654c0ccda22397a1f210",
+      "digest": "06ba722fd03a0801e3fab9f290bef60bbfccbbbbf461e28a91514c0e3ec2b4b8"
     },
     {
       "node": "it_provisioner",
-      "summary": "ticket 4: REQUEST create repository access (POL-004) on repository -> requested (CAND-001-IT-04)",
+      "summary": "ticket 4: REQUEST create vpn access (POL-004) on vpn -> requested (CAND-001-IT-04)",
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "e0af1528d862dd6a5c6548480019b28f2833b9c067aa483c018337dc7d5650f9",
-      "digest": "5711e8703e4783e39c2a68d1f816e9231e21e06e4f2541a15829e9609bc5ef2f"
+      "prev_hash": "06ba722fd03a0801e3fab9f290bef60bbfccbbbbf461e28a91514c0e3ec2b4b8",
+      "digest": "4e414315fb03cc150d607ade2bcb6ee60355d088be0787564c77caab1ff7a6c0"
     },
     {
       "node": "it_provisioner",
-      "summary": "ticket 5: REQUEST create vpn access (POL-004) on vpn -> requested (CAND-001-IT-05)",
+      "summary": "ticket 5: allocate developer laptop 32 GB + external monitor (POL-003) on hardware -> requested (CAND-001-IT-05)",
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "5711e8703e4783e39c2a68d1f816e9231e21e06e4f2541a15829e9609bc5ef2f",
-      "digest": "7425ca7a15557bbea84744f98a53541dc45439eaeb66c1752c9072445c968ff0"
+      "prev_hash": "4e414315fb03cc150d607ade2bcb6ee60355d088be0787564c77caab1ff7a6c0",
+      "digest": "050f44afbd29d7a20e55a164305b8d2f90da23ad16787a27327b12414aa55854"
     },
     {
       "node": "it_provisioner",
@@ -126,8 +126,8 @@
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "7425ca7a15557bbea84744f98a53541dc45439eaeb66c1752c9072445c968ff0",
-      "digest": "18d0abaae763441e309d53dc22c12bb738000d31953b3d5f3f76c059194e99cb"
+      "prev_hash": "050f44afbd29d7a20e55a164305b8d2f90da23ad16787a27327b12414aa55854",
+      "digest": "befb0aa3209152df49cecb8894d3fefbaeec74d31d9d0794296b1a1bc6a814f6"
     },
     {
       "node": "notifier",
@@ -135,8 +135,8 @@
       "reasoning_pattern": "",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "18d0abaae763441e309d53dc22c12bb738000d31953b3d5f3f76c059194e99cb",
-      "digest": "ec8a99608243688400939ea80c50aa7bb9374941b6a8cac80635fd0243ad4da2"
+      "prev_hash": "befb0aa3209152df49cecb8894d3fefbaeec74d31d9d0794296b1a1bc6a814f6",
+      "digest": "847efb06eed28e0be61d528f84eed639e13cc429d2228973fc8f4a3f7106816e"
     },
     {
       "node": "notifier",
@@ -144,8 +144,8 @@
       "reasoning_pattern": "",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "ec8a99608243688400939ea80c50aa7bb9374941b6a8cac80635fd0243ad4da2",
-      "digest": "fb370edef707008b2e4023754adbbf49e758b0af225e6aecee7322f764d11cbc"
+      "prev_hash": "847efb06eed28e0be61d528f84eed639e13cc429d2228973fc8f4a3f7106816e",
+      "digest": "dc8b55cb1191a5c0451ff819384fc17546132d75abd196d58bf9de08fb48b5f9"
     }
   ]
 }

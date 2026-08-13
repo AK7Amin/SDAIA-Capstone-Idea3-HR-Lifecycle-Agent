@@ -1,12 +1,12 @@
 {
-  "thread_id": "run20260813T033116-78a154-CAND-001",
+  "thread_id": "run20260813T033755-3f9587-CAND-001",
   "case_id": "CAND-001",
-  "generated_at": "2026-08-13T03:32:28Z",
+  "generated_at": "2026-08-13T03:38:50Z",
   "runs": [
     {
       "decision_source": "model",
       "forced_first_call": true,
-      "final_answer": "{\"tickets\": [{\"system\": \"email\", \"action\": \"REQUEST create mailbox (POL-004)\"}, {\"system\": \"directory\", \"action\": \"REQUEST create directory identity (POL-004)\"}, {\"system\": \"hardware\", \"action\": \"REQUEST allocate developer laptop 32 GB + external monitor (POL-003)\"}, {\"system\": \"repository\", \"action\": \"REQUEST create repository access (POL-004)\"}, {\"system\": \"vpn\", \"action\": \"REQUEST create vpn access (POL-004)\"}]}",
+      "final_answer": "{\"tickets\": [{\"system\": \"email\", \"action\": \"REQUEST create mailbox (POL-004)\"}, {\"system\": \"directory\", \"action\": \"REQUEST create directory identity (POL-004)\"}, {\"system\": \"repository\", \"action\": \"REQUEST create repository access (POL-004)\"}, {\"system\": \"vpn\", \"action\": \"REQUEST create vpn access (POL-004)\"}, {\"system\": \"hardware\", \"action\": \"allocate developer laptop 32 GB + external monitor (POL-003)\"}]}",
       "steps": [
         {
           "thought": "Policy lookup imposed by the system before reasoning started (not a model decision).",
@@ -20,7 +20,7 @@
           "thought": "Need to determine the required equipment for Sara Alqahtani based on her role as Data Engineer per POL-003.",
           "action": "date_calculator",
           "action_input": "{\"expression\": \"2026-09-01\"}",
-          "observation": "tool error: unsupported date expression: '2026-09-01'. Supported forms: 'YYYY-MM-DD + N days', 'YYYY-MM-DD - N weeks', 'YYYY-MM-DD - YYYY-MM-DD'. Expressions are parsed, never evaluated as code."
+          "observation": "2026-09-01"
         }
       ]
     }

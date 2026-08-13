@@ -399,3 +399,32 @@ def test_refuse_reason_is_audit_ready():
 
     assert "payroll_adjust" in reason
     assert "hr_policy_lookup" in reason, "audit line must show what WAS available"
+
+
+class TestBareDateIsAValidExpression:
+    """Both committed live transcripts show the model calling
+    date_calculator with a bare date ('2026-09-01') and getting a tool
+    error back. A bare ISO date is a degenerate valid expression
+    (date + 0 days) — a tolerant tool beats a failed dispatch as D1
+    evidence, and rejecting it taught the model nothing."""
+
+    def test_bare_iso_date_echoes_back_validated(self):
+        from src.tools import build_hr_registry
+
+        reg = build_hr_registry()
+        assert reg.run("date_calculator", '{"expression": "2026-09-01"}').output == "2026-09-01"
+
+    def test_bare_date_still_validates_the_calendar(self):
+        import pytest
+
+        from src.tools import ToolError, build_hr_registry
+
+        reg = build_hr_registry()
+        with pytest.raises(ToolError):
+            reg.run("date_calculator", '{"expression": "2026-02-30"}')
+
+    def test_arithmetic_forms_unchanged(self):
+        from src.tools import build_hr_registry
+
+        reg = build_hr_registry()
+        assert reg.run("date_calculator", '{"expression": "2026-09-01 + 90 days"}').output == "2026-11-30"
