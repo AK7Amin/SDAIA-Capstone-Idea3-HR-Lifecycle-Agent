@@ -1,0 +1,36 @@
+== compose ps ==
+SERVICE    STATUS
+app        Up 4 seconds
+postgres   Up 8 seconds (healthy)
+
+== 1) no .env baked into the image ==
+.env.example
+
+== 2) GET /healthz ==
+{"status":"ok"}
+== 3) POST /process without token ==
+{"detail":"invalid or missing credentials"}
+== 4) full HITL cycle through the COMPOSE stack (real LLM, compose postgres) ==
+{"status":"awaiting_approval","thread_id":"run20260813T020357-d5f012-COMPOSE-001","case_id":"COMPOSE-001","guard_flags":{"injection_flagged":false,"injection_rule":null,"removed_lines":0,"pii_labels":[]}}
+
+== 5) resume approve (privileged token) ==
+{"status":"completed","thread_id":"run20260813T020357-d5f012-COMPOSE-001","case_id":"COMPOSE-001","audit_events":16}
+
+== 6) artifacts inside the app volume ==
+contract.md
+welcome.md
+# Employment Contract Notice
+
+**Case:** COMPOSE-001
+
+Dear Huda Alzahrani,
+
+== 7) RESTART SURVIVAL: pause -> docker compose restart app -> resume ==
+paused: {"status":"awaiting_approval","thread_id":"run20260813T020436-589e94-RESTART-001","case_id":"RESTART-001","guard_flags":{"injection_flagged":false,"injection_rule":null,"removed_lines":0,"pii_labels":[]}}
+app container restarted (uptime resets):
+SERVICE   STATUS
+app       Up 8 seconds
+resuming the SAME thread after the restart:
+{"status":"completed","thread_id":"run20260813T020436-589e94-RESTART-001","case_id":"RESTART-001","audit_events":16}
+contract.md
+welcome.md

@@ -1,0 +1,23 @@
+# Secrets must NEVER be baked into the image (previous project caught this
+# only in review — here it exists before the first build).
+.env
+
+# Generated evidence & runtime state — the container produces its own.
+reports/
+outbox/
+quarantine/
+state/
+intake/
+checkpoints/
+
+# Dev noise
+.git/
+.gitignore
+__pycache__/
+*.pyc
+.pytest_cache/
+docs/
+capstone.ipynb
+sample_candidates/
+tools/
+tests/

@@ -1,0 +1,35 @@
+# Two-service cloud simulation: the agent + its persistent state store.
+# `docker compose up` gives the whole D5 story on one machine.
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: capstone
+      POSTGRES_DB: hr_agent
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d hr_agent"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Inside the compose network the DB is `postgres:5432`, not localhost.
+      POSTGRES_DSN: postgresql://postgres:capstone@postgres:5432/hr_agent
+      HR_AGENT_ROOT: /data
+    env_file:
+      - .env          # LLM keys + service tokens; never baked into the image
+    volumes:
+      - appdata:/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  appdata:
