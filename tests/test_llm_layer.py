@@ -439,3 +439,56 @@ def test_case_id_and_budget_are_isolated_per_thread(monkeypatch):
     assert seen["CAND-A"] == ("CAND-A", guards["CAND-A"])
     assert seen["CAND-B"] == ("CAND-B", guards["CAND-B"])
     assert client.active_case_id == "-", "worker state must not leak to the caller"
+
+
+class TestDeadProviderFailover:
+    """A provider that is DOWN (connection refused / DNS dead / timeout) has no
+    HTTP status at all — the chain must move on exactly as it does for a dead
+    key. Found live: the notebook failover demo pointed provider 1 at an
+    unroutable port and the whole request died instead of failing over."""
+
+    def test_connection_refused_fails_over_to_next_provider(self, monkeypatch):
+        import urllib.error
+
+        client = two_provider_client(monkeypatch)
+        served = []
+
+        def fake_post(key, prompt, base_url=None, model=None):
+            served.append(base_url)
+            if "p1" in (base_url or ""):
+                raise urllib.error.URLError(OSError(10061, "connection refused"))
+            return ("ok", 3, 2)
+
+        monkeypatch.setattr(client, "_post", fake_post)
+        assert client.invoke("hi", node="n") == "ok"
+        assert client.active_provider == "p2.example"   # dead endpoint skipped
+
+    def test_timeout_fails_over_too(self, monkeypatch):
+        client = two_provider_client(monkeypatch)
+
+        def fake_post(key, prompt, base_url=None, model=None):
+            if "p1" in (base_url or ""):
+                raise TimeoutError("timed out")
+            return ("ok", 1, 1)
+
+        monkeypatch.setattr(client, "_post", fake_post)
+        assert client.invoke("hi", node="n") == "ok"
+
+    def test_http_500_still_raises_immediately(self, monkeypatch):
+        """A provider that is UP but erroring is a different animal — pinned."""
+        import urllib.error
+
+        client = two_provider_client(monkeypatch)
+        calls = []
+
+        def fake_post(key, prompt, base_url=None, model=None):
+            calls.append(key)
+            raise urllib.error.HTTPError("u", 500, "boom", {}, None)
+
+        monkeypatch.setattr(client, "_post", fake_post)
+        try:
+            client.invoke("hi", node="n")
+            raise AssertionError("expected a raise")
+        except RuntimeError:
+            pass
+        assert len(calls) == 1
