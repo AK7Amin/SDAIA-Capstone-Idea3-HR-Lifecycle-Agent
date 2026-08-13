@@ -198,5 +198,5 @@ None blocking. Declared limits, all deliberate and stated in the README:
 - The notebook's pause/resume section runs stub agents so it can be rebuilt
   without spending quota; the real-LLM run is captured raw in
   `reports/logs/01-live-run.log`.
-- `mermaid` lives in the notebook; the README carries an ASCII diagram (GitHub
-  renders both, but the ASCII one needs no renderer).
+- (resolved later the same morning: the README now carries a mermaid diagram
+  plus demo images under docs/images/ — owner request.)
