@@ -181,10 +181,22 @@ separate interview. demo.md covers the demo-script gap.
 | 11 | GREEN (xfail LIFTED — e2e live) | 0/5 | 0/2 | — | 03b70af | 20a5148 |
 | 12 | GREEN | 0/5 | 0/2 | — | 16c4795 | 355ec02 |
 | 13 | GREEN (live compose captures) | 0/5 | 0/2 | — | — | (this) |
-| 14–15 | in progress (main) | 0/5 | 0/2 | — | | |
+| 14 | GREEN (living artifact, 4 rebuilds) | 0/5 | 0/2 | — | — | 732cfd6 |
+| 15 | GREEN | 0/5 | 0/2 | — | — | (final) |
 
-**Closing status**: (declared at phase-3 exit: SUCCESS / PARTIAL)
+**Closing status**: **SUCCESS** — all 15 slices green, the integration test
+passes unmarked, 473 offline tests + 4 Docker-marked all pass, and every
+rubric row has a captured artifact. Phase-4 review found no blocker; its
+findings were fixed in-loop (metrics consistency, budget refusal, failover
+metric, ReAct transcript, compose healthcheck) and re-verified.
 
 ## Documented shortfalls
 
-(none yet)
+None blocking. Declared limits, all deliberate and stated in the README:
+- The presentation deck is out of scope for this run (owner builds it after a
+  separate interview); `demo.md` carries the demo script.
+- The notebook's pause/resume section runs stub agents so it can be rebuilt
+  without spending quota; the real-LLM run is captured raw in
+  `reports/logs/01-live-run.log`.
+- `mermaid` lives in the notebook; the README carries an ASCII diagram (GitHub
+  renders both, but the ASCII one needs no renderer).

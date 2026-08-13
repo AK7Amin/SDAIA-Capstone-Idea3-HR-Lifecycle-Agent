@@ -711,6 +711,7 @@ class TestReactTranscriptIsPersisted:
             ]
 
         path = write_react_transcript(tmp_path, "thread-1", "CASE-1", [_Run()])
+        assert path.parent.name == "react"   # NOT traces/ — one file type per dir
         doc = json.loads(path.read_text(encoding="utf-8"))
         assert doc["thread_id"] == "thread-1" and doc["case_id"] == "CASE-1"
         run = doc["runs"][0]

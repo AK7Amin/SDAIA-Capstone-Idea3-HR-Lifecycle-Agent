@@ -1,0 +1,27 @@
+{
+  "thread_id": "run20260813T023415-efb962-CAND-002",
+  "case_id": "CAND-002",
+  "generated_at": "2026-08-13T02:36:21Z",
+  "runs": [
+    {
+      "decision_source": "model",
+      "forced_first_call": true,
+      "steps": [
+        {
+          "thought": "Policy lookup imposed by the system before reasoning started (not a model decision).",
+          "action": "hr_policy_lookup",
+          "action_input": {
+            "query": "Backend Developer equipment laptop hardware account mailbox provisioning approval role"
+          },
+          "observation": "POL-003 — Equipment allocation by role\n\nEquipment is allocated by role, not by request. Engineering and data roles\nreceive a developer laptop with 32 GB of memory and an external monitor.\nBusiness, finance, and administrative roles receive a standard laptop with\n16 GB of memory. Any hardware beyond the role baseline needs a documented\nbusiness justification approved by the department head.\n\nPOL-004 — Account provisioning needs manager and HR approval\n\nNo system account, mailbox, or directory identity is created until both the\nhiring manager and HR have approved the provisioning request. The ap"
+        },
+        {
+          "thought": "The new hire is a Backend Developer, which falls under Engineering. According to POL-003, Engineering roles receive a developer laptop with 32 GB of memory and an external monitor. For accounts, POL-004 states that no account can be created until both the hiring manager and HR approve the request, so all account-related tickets must be REQUESTs.",
+          "action": "date_calculator",
+          "action_input": "{\"expression\": \"2026-09-15\"}",
+          "observation": "tool error: unsupported date expression: '2026-09-15'. Supported forms: 'YYYY-MM-DD + N days', 'YYYY-MM-DD - N weeks', 'YYYY-MM-DD - YYYY-MM-DD'. Expressions are parsed, never evaluated as code."
+        }
+      ]
+    }
+  ]
+}

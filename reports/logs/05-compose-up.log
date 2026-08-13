@@ -34,3 +34,6 @@ resuming the SAME thread after the restart:
 {"status":"completed","thread_id":"run20260813T020436-589e94-RESTART-001","case_id":"RESTART-001","audit_events":16}
 contract.md
 welcome.md
+SERVICE    STATUS
+app        Up 6 seconds (healthy)
+postgres   Up 9 seconds (healthy)

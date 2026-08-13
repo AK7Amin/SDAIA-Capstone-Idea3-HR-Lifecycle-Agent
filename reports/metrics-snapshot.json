@@ -1,97 +1,104 @@
 {
-  "generated_at": "2026-08-13T02:12:31Z",
+  "generated_at": "2026-08-13T02:36:21Z",
   "thread_ids": [
-    "run20260813T021134-a374a7-CAND-001",
-    "run20260813T021150-8b1318-CAND-002",
-    "run20260813T021201-a2c5a4-CAND-003",
-    "run20260813T021213-bf1c29-CAND-004",
-    "run20260813T021224-d5da40-CAND-005"
+    "run20260813T023403-6c2c6e-CAND-001",
+    "run20260813T023415-efb962-CAND-002",
+    "run20260813T023429-dc1e98-CAND-003",
+    "run20260813T023440-abba4f-CAND-004",
+    "run20260813T023449-c89808-CAND-005"
   ],
   "usage": {
-    "total_tokens": 18191,
-    "total_latency_ms": 48781,
-    "total_calls": 0,
+    "total_tokens": 18554,
+    "total_latency_ms": 45767,
+    "total_ref_cost_usd": 0.004304,
     "per_node": {
       "profile_analyst": {
         "calls": 4,
         "tokens": 2187,
-        "latency_ms": 4893,
+        "latency_ms": 5947,
         "ref_cost_usd": 0.00047835
       },
       "training_planner": {
         "calls": 8,
-        "tokens": 6609,
-        "latency_ms": 28834,
-        "ref_cost_usd": 0.0019421999999999998
+        "tokens": 6796,
+        "latency_ms": 25079,
+        "ref_cost_usd": 0.0020489999999999996
       },
       "plan_reviewer": {
         "calls": 8,
-        "tokens": 7665,
-        "latency_ms": 10595,
-        "ref_cost_usd": 0.00139725
+        "tokens": 7841,
+        "latency_ms": 11049,
+        "ref_cost_usd": 0.0014232000000000001
       },
       "contract_drafter": {
         "calls": 4,
         "tokens": 1730,
-        "latency_ms": 4459,
+        "latency_ms": 3692,
         "ref_cost_usd": 0.00035309999999999996
-      },
-      "it_provisioner": {
-        "calls": 2,
-        "tokens": 1662,
-        "latency_ms": 2464,
-        "ref_cost_usd": 0.00035505
       }
     },
     "per_case": {
       "CAND-001": {
-        "calls": 8,
-        "tokens": 6584,
-        "latency_ms": 18168,
-        "ref_cost_usd": 0.00151095
+        "calls": 6,
+        "tokens": 4938,
+        "latency_ms": 12430,
+        "ref_cost_usd": 0.0011574
       },
       "CAND-002": {
         "calls": 6,
-        "tokens": 4531,
-        "latency_ms": 10315,
-        "ref_cost_usd": 0.0010252500000000001
+        "tokens": 4586,
+        "latency_ms": 12978,
+        "ref_cost_usd": 0.0010497
       },
       "CAND-003": {
         "calls": 6,
-        "tokens": 4265,
-        "latency_ms": 12290,
-        "ref_cost_usd": 0.00097635
+        "tokens": 4412,
+        "latency_ms": 11225,
+        "ref_cost_usd": 0.0010299
       },
       "CAND-004": {
         "calls": 6,
-        "tokens": 4473,
-        "latency_ms": 10472,
-        "ref_cost_usd": 0.0010134
+        "tokens": 4618,
+        "latency_ms": 9134,
+        "ref_cost_usd": 0.0010666500000000002
       }
     },
     "per_provider": {
       "mistral": {
-        "calls": 26,
-        "tokens": 19853,
-        "latency_ms": 51245,
-        "ref_cost_usd": 0.00452595
+        "calls": 24,
+        "tokens": 18554,
+        "latency_ms": 45767,
+        "ref_cost_usd": 0.00430365
       }
-    },
-    "total_ref_cost_usd": 0.0
+    }
   },
   "counters": {
     "cases_processed_total": {
+      "awaiting_approval": 4.0,
+      "quarantined": 1.0,
+      "completed": 3.0,
       "offboarded": 1.0
     },
     "node_runs_total": {
-      "hr_gate": 1.0,
+      "intake": 5.0,
+      "profile_analyst": 4.0,
+      "training_planner": 8.0,
+      "plan_reviewer": 8.0,
+      "contract_drafter": 4.0,
+      "quarantine": 1.0,
+      "hr_gate": 3.0,
+      "it_provisioner": 2.0,
+      "notifier": 2.0,
       "offboard": 1.0
     },
-    "guardrail_blocks_total": {},
+    "guardrail_blocks_total": {
+      "injection": 1.0,
+      "pii": 1.0
+    },
     "llm_failovers_total": {},
     "case_latency_ms": {
-      "count": 1.0,
-      "sum": 236.74629999732133
+      "count": 9.0,
+      "sum": 56261.29530000617
     }
   }
 }

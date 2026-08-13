@@ -1,0 +1,151 @@
+{
+  "thread_id": "run20260813T023415-efb962-CAND-002",
+  "case_id": "CAND-002",
+  "chain_intact": true,
+  "events": [
+    {
+      "node": "intake",
+      "summary": "intake validated for CAND-002",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "",
+      "digest": "41eb34380b7cf6ba66ea7fbaae252609ad0f073c8424f6842594603684d78d53"
+    },
+    {
+      "node": "profile_analyst",
+      "summary": "extraction attempt 1: profile complete",
+      "reasoning_pattern": "extraction",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "41eb34380b7cf6ba66ea7fbaae252609ad0f073c8424f6842594603684d78d53",
+      "digest": "82cc51505d9d69f123dc6bd9515c8153d82a86ea1b5b09549de265333e2b5a2b"
+    },
+    {
+      "node": "training_planner",
+      "summary": "planned 4 week(s)",
+      "reasoning_pattern": "plan-and-execute",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "82cc51505d9d69f123dc6bd9515c8153d82a86ea1b5b09549de265333e2b5a2b",
+      "digest": "3fc8d8853de2aceb697d04a1308f327bf9561e944fbe9f14a9f454ce03cf06b5"
+    },
+    {
+      "node": "plan_reviewer",
+      "summary": "verdict 'revise' after 1 revision(s), 2 open concern(s)",
+      "reasoning_pattern": "reflexion",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "3fc8d8853de2aceb697d04a1308f327bf9561e944fbe9f14a9f454ce03cf06b5",
+      "digest": "0f437fe24384f90da3fc76d599a70afb9a99a441da74506e49d68d4d2cd328ff"
+    },
+    {
+      "node": "training_planner",
+      "summary": "planned 4 week(s), addressing 2 reviewer concern(s)",
+      "reasoning_pattern": "plan-and-execute",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "0f437fe24384f90da3fc76d599a70afb9a99a441da74506e49d68d4d2cd328ff",
+      "digest": "be95accbf148b0174b9dcb3659d543ba823c96a3158f87e01cbf14792a9ce1a3"
+    },
+    {
+      "node": "plan_reviewer",
+      "summary": "verdict 'approve' after 1 revision(s), 1 open concern(s)",
+      "reasoning_pattern": "reflexion",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "be95accbf148b0174b9dcb3659d543ba823c96a3158f87e01cbf14792a9ce1a3",
+      "digest": "e9d167510fa34181c5ba1ade4741863119f181da9b28876da0d300cb31837848"
+    },
+    {
+      "node": "contract_drafter",
+      "summary": "contract drafted for CAND-002 (Backend Developer); held in state until approval",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "e9d167510fa34181c5ba1ade4741863119f181da9b28876da0d300cb31837848",
+      "digest": "48ba7e5f9937e756a58e1759671cb5569aee343219529ad7a6369b4adf83687c"
+    },
+    {
+      "node": "hr_gate",
+      "summary": "human decision 'approve' by hr",
+      "reasoning_pattern": "human-in-the-loop",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "48ba7e5f9937e756a58e1759671cb5569aee343219529ad7a6369b4adf83687c",
+      "digest": "5652fc5c21ae22f75ca2f27f2e679093c49a5186596b57cf77b5579bfa206259"
+    },
+    {
+      "node": "it_provisioner",
+      "summary": "tool step 1: REQUEST create mailbox (POL-004) on email -> requested (CAND-002-IT-01)",
+      "reasoning_pattern": "react",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "5652fc5c21ae22f75ca2f27f2e679093c49a5186596b57cf77b5579bfa206259",
+      "digest": "450606e3cdd05be4ae1fd81af746d4ae0dd9ae3fcb793cdf645a3103e1aaa95b"
+    },
+    {
+      "node": "it_provisioner",
+      "summary": "tool step 2: REQUEST create directory identity (POL-004) on directory -> requested (CAND-002-IT-02)",
+      "reasoning_pattern": "react",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "450606e3cdd05be4ae1fd81af746d4ae0dd9ae3fcb793cdf645a3103e1aaa95b",
+      "digest": "72be0cede7bd85392434ba155aeebeab6ceed21bece9106e809cad417c7e730d"
+    },
+    {
+      "node": "it_provisioner",
+      "summary": "tool step 3: allocate developer laptop 32 GB + external monitor (POL-003) on hardware -> requested (CAND-002-IT-03)",
+      "reasoning_pattern": "react",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "72be0cede7bd85392434ba155aeebeab6ceed21bece9106e809cad417c7e730d",
+      "digest": "070c3bbe1a3038733cf7513be629b4f42544ac6c0d0aa5be1558f4116212b666"
+    },
+    {
+      "node": "it_provisioner",
+      "summary": "tool step 4: REQUEST create repository access (POL-004) on repository -> requested (CAND-002-IT-04)",
+      "reasoning_pattern": "react",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "070c3bbe1a3038733cf7513be629b4f42544ac6c0d0aa5be1558f4116212b666",
+      "digest": "ddbc6751e18736bac80f9fe11c41e76b478d905ef7eba7ab0907495eedc8f80a"
+    },
+    {
+      "node": "it_provisioner",
+      "summary": "tool step 5: REQUEST create vpn access (POL-004) on vpn -> requested (CAND-002-IT-05)",
+      "reasoning_pattern": "react",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "ddbc6751e18736bac80f9fe11c41e76b478d905ef7eba7ab0907495eedc8f80a",
+      "digest": "ad35b359ebb5ebca77e07e23bcf3e1e95a71bc1052c23bc4509f300377d5f786"
+    },
+    {
+      "node": "it_provisioner",
+      "summary": "provisioning complete: 5 ticket(s)",
+      "reasoning_pattern": "react",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "ad35b359ebb5ebca77e07e23bcf3e1e95a71bc1052c23bc4509f300377d5f786",
+      "digest": "f5c8393da5458653475e22aadd63c706304d25babc3f7639aa3540cf5c5015a8"
+    },
+    {
+      "node": "notifier",
+      "summary": "contract document written for CAND-002",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "f5c8393da5458653475e22aadd63c706304d25babc3f7639aa3540cf5c5015a8",
+      "digest": "69b214149561cea461e581cb540e71d29cfd21bf767bfdf0ce2013454d7caf60"
+    },
+    {
+      "node": "notifier",
+      "summary": "welcome pack written for CAND-002",
+      "reasoning_pattern": "",
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "prev_hash": "69b214149561cea461e581cb540e71d29cfd21bf767bfdf0ce2013454d7caf60",
+      "digest": "c3949a76edfe54ceafe386c27306357c4ebb1fe9efd696247e2ead094322986b"
+    }
+  ]
+}

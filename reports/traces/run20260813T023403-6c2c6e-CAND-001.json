@@ -1,5 +1,5 @@
 {
-  "thread_id": "run20260813T021134-a374a7-CAND-001",
+  "thread_id": "run20260813T023403-6c2c6e-CAND-001",
   "case_id": "CAND-001",
   "chain_intact": true,
   "events": [
@@ -32,30 +32,30 @@
     },
     {
       "node": "plan_reviewer",
-      "summary": "verdict 'revise' after 1 revision(s), 2 open concern(s)",
+      "summary": "verdict 'revise' after 1 revision(s), 1 open concern(s)",
       "reasoning_pattern": "reflexion",
       "cost_usd": 0.0,
       "latency_ms": 0,
       "prev_hash": "c9847ba1a07ad7bddfdb3dc85cc728476365c45907db498eb8867a76290bfa89",
-      "digest": "dbc0c79a6ac1a71d407b0c2335e7c278ed382ac9927760aa0ef8818e42e3e891"
+      "digest": "821a239c8e62134538956fb29444061821164fb8d4e3659b707cd739f2891e32"
     },
     {
       "node": "training_planner",
-      "summary": "planned 4 week(s), addressing 2 reviewer concern(s)",
+      "summary": "planned 4 week(s), addressing 1 reviewer concern(s)",
       "reasoning_pattern": "plan-and-execute",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "dbc0c79a6ac1a71d407b0c2335e7c278ed382ac9927760aa0ef8818e42e3e891",
-      "digest": "4bb891cc98e791e6080c9df89e9ad14295e2f9b0166509a8993850351a0ee8a6"
+      "prev_hash": "821a239c8e62134538956fb29444061821164fb8d4e3659b707cd739f2891e32",
+      "digest": "9c30deba7440971d79461339243e3d34aea1da8f451eb115ef207469cdb1d4de"
     },
     {
       "node": "plan_reviewer",
-      "summary": "verdict 'revise' after 2 revision(s), 2 open concern(s)",
+      "summary": "verdict 'revise' after 2 revision(s), 1 open concern(s)",
       "reasoning_pattern": "reflexion",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "4bb891cc98e791e6080c9df89e9ad14295e2f9b0166509a8993850351a0ee8a6",
-      "digest": "7596e13827f2f7677180a367b9b43fc96c955034c957e207fc7cc6699549f2bc"
+      "prev_hash": "9c30deba7440971d79461339243e3d34aea1da8f451eb115ef207469cdb1d4de",
+      "digest": "9cc8dfcfac3bb3506a55a0380dcb0402f70e1412b90076232b7cd16d464c18be"
     },
     {
       "node": "contract_drafter",
@@ -63,8 +63,8 @@
       "reasoning_pattern": "",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "7596e13827f2f7677180a367b9b43fc96c955034c957e207fc7cc6699549f2bc",
-      "digest": "807d9121f26f4ab0c4f001c94fc6bd7c195863d1cb1016291baa05bf387c259c"
+      "prev_hash": "9cc8dfcfac3bb3506a55a0380dcb0402f70e1412b90076232b7cd16d464c18be",
+      "digest": "631b9172dbb9b79cd53ec6789ad25456a7d9ea3daa1d28c7cfe076bd50a90ace"
     },
     {
       "node": "hr_gate",
@@ -72,8 +72,8 @@
       "reasoning_pattern": "human-in-the-loop",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "807d9121f26f4ab0c4f001c94fc6bd7c195863d1cb1016291baa05bf387c259c",
-      "digest": "610528e357613cb18b0ca7af0ff2b482e1d6459df654077e093b33c5addd7c76"
+      "prev_hash": "631b9172dbb9b79cd53ec6789ad25456a7d9ea3daa1d28c7cfe076bd50a90ace",
+      "digest": "3fcb8e09882d1460b25bb3e27cde4187394ae837019b130f2d67895458118237"
     },
     {
       "node": "it_provisioner",
@@ -81,8 +81,8 @@
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "610528e357613cb18b0ca7af0ff2b482e1d6459df654077e093b33c5addd7c76",
-      "digest": "bf435a217b1980e51949ed4237c211f354ac9656f5298f944c188d5e32d96f65"
+      "prev_hash": "3fcb8e09882d1460b25bb3e27cde4187394ae837019b130f2d67895458118237",
+      "digest": "c6eb36dbc2c357b3a3acb0f12c2fcb98dabbb72f2e68a483aa4a6c7de46c14b2"
     },
     {
       "node": "it_provisioner",
@@ -90,8 +90,8 @@
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "bf435a217b1980e51949ed4237c211f354ac9656f5298f944c188d5e32d96f65",
-      "digest": "9d4553b401c939d5ccd815ba7781927f8d15907c2140ce38b17cd33f7857cfd8"
+      "prev_hash": "c6eb36dbc2c357b3a3acb0f12c2fcb98dabbb72f2e68a483aa4a6c7de46c14b2",
+      "digest": "75556c552fa405e39882aab6267041fa894504776ffc58951613ffba3b384d85"
     },
     {
       "node": "it_provisioner",
@@ -99,8 +99,8 @@
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "9d4553b401c939d5ccd815ba7781927f8d15907c2140ce38b17cd33f7857cfd8",
-      "digest": "fc11500331a0f08b078b09b7752c60cd182263093fecba6a4c816f97913af3c7"
+      "prev_hash": "75556c552fa405e39882aab6267041fa894504776ffc58951613ffba3b384d85",
+      "digest": "42e0c9e8c7768d21f2cd88e04900ccecbaee7336f0c202b78da521cf833e1c82"
     },
     {
       "node": "it_provisioner",
@@ -108,8 +108,8 @@
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "fc11500331a0f08b078b09b7752c60cd182263093fecba6a4c816f97913af3c7",
-      "digest": "ce25b850a0a587416e1f64bcf7753cf1e72b083daddc2c43a0fa4cd2c3a2a666"
+      "prev_hash": "42e0c9e8c7768d21f2cd88e04900ccecbaee7336f0c202b78da521cf833e1c82",
+      "digest": "b0bb0e717aa0fb396572695988dba4eb20848307d34acb4da1acacaa6a5b194c"
     },
     {
       "node": "it_provisioner",
@@ -117,8 +117,8 @@
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "ce25b850a0a587416e1f64bcf7753cf1e72b083daddc2c43a0fa4cd2c3a2a666",
-      "digest": "903503c2caa11a83a804ef762bc0128f3947ef9ce44cc899d79e0a0b21077f7c"
+      "prev_hash": "b0bb0e717aa0fb396572695988dba4eb20848307d34acb4da1acacaa6a5b194c",
+      "digest": "2470119b225445796058d083744b4b7ec2f880f4e0070f27c29c3f98df92022d"
     },
     {
       "node": "it_provisioner",
@@ -126,8 +126,8 @@
       "reasoning_pattern": "react",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "903503c2caa11a83a804ef762bc0128f3947ef9ce44cc899d79e0a0b21077f7c",
-      "digest": "d5ffc55a04d55a14ed4d8f66c190e505e1aca2164370a0f62080f8d0cd088f21"
+      "prev_hash": "2470119b225445796058d083744b4b7ec2f880f4e0070f27c29c3f98df92022d",
+      "digest": "e345b439ea7a15195167cca530a78268972179234b216d99a629ad1b82ef3075"
     },
     {
       "node": "notifier",
@@ -135,8 +135,8 @@
       "reasoning_pattern": "",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "d5ffc55a04d55a14ed4d8f66c190e505e1aca2164370a0f62080f8d0cd088f21",
-      "digest": "0b5a5876fd4362587e341e808f8caecc63cf5e83481d780464bbbbbff52ee428"
+      "prev_hash": "e345b439ea7a15195167cca530a78268972179234b216d99a629ad1b82ef3075",
+      "digest": "a8d52e450f79adc855d47f5e811ccf0f0b678ce10b776d8ed15e46e5f68fba9f"
     },
     {
       "node": "notifier",
@@ -144,8 +144,8 @@
       "reasoning_pattern": "",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "0b5a5876fd4362587e341e808f8caecc63cf5e83481d780464bbbbbff52ee428",
-      "digest": "038471908967872aa1ee89d437f609ef30f20c8b4bc2a772742166d999a45888"
+      "prev_hash": "a8d52e450f79adc855d47f5e811ccf0f0b678ce10b776d8ed15e46e5f68fba9f",
+      "digest": "828588e4034d6fe49d64de6da13be34e19ffd7ba6e812833239879b1017d400e"
     }
   ]
 }

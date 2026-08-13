@@ -42,6 +42,7 @@ __all__ = [
     "EVENT_FIELDS",
     "LATENCY_BUCKETS_MS",
     "METRICS_FILENAME",
+    "REACT_DIRNAME",
     "TRACES_DIRNAME",
     "counter_snapshot",
     "metrics_registry",
@@ -59,6 +60,9 @@ __all__ = [
 
 #: Layout of the evidence folder. The e2e freezes both names.
 TRACES_DIRNAME = "traces"
+#: ReAct transcripts live in their OWN folder: `traces/` holds audit traces and
+#: nothing else, so the verifier can treat every file it finds there as one.
+REACT_DIRNAME = "react"
 METRICS_FILENAME = "metrics-snapshot.json"
 
 #: Audit fields persisted per event, in this order. ``digest`` is appended by
@@ -330,8 +334,8 @@ def write_react_transcript(
     runs = [run for run in react_runs if run is not None]
     if not runs:
         return None
-    traces = Path(reports_dir) / TRACES_DIRNAME
-    traces.mkdir(parents=True, exist_ok=True)
+    folder = Path(reports_dir) / REACT_DIRNAME
+    folder.mkdir(parents=True, exist_ok=True)
     payload = {
         "thread_id": str(thread_id),
         "case_id": str(case_id),
@@ -355,7 +359,7 @@ def write_react_transcript(
             for run in runs
         ],
     }
-    out = traces / f"{_trace_stem(thread_id)}-react.json"
+    out = folder / f"{_trace_stem(thread_id)}.json"
     out.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

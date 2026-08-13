@@ -1,11 +1,18 @@
 === HITL: each resume is a separate OS process ===
-capture process PID: 17352
+capture process PID: 43664
 checkpointer: postgres at postgresql://postgres:***@localhost:5433/hr_agent
-CAND-001  completed  thread=run20260813T021134-a374a7-CAND-001
+CAND-001  completed  thread=run20260813T023403-6c2c6e-CAND-001
     react: 2 tool step(s), decision_source=model, forced_first_call=True
+    react transcript: run20260813T023403-6c2c6e-CAND-001-react.json
     documents: contract.md, welcome.md
-    trace: run20260813T021134-a374a7-CAND-001.json
+    trace: run20260813T023403-6c2c6e-CAND-001.json
 checkpointer: postgres at postgresql://postgres:***@localhost:5433/hr_agent
-CAND-003  offboarded  thread=run20260813T021201-a2c5a4-CAND-003
+CAND-003  offboarded  thread=run20260813T023429-dc1e98-CAND-003
     documents: (none - not approved)
-    trace: run20260813T021201-a2c5a4-CAND-003.json
+    trace: run20260813T023429-dc1e98-CAND-003.json
+checkpointer: postgres at postgresql://postgres:***@localhost:5433/hr_agent
+CAND-002  completed  thread=run20260813T023415-efb962-CAND-002
+    react: 2 tool step(s), decision_source=model, forced_first_call=True
+    react transcript: run20260813T023415-efb962-CAND-002.json
+    documents: contract.md, welcome.md
+    trace: run20260813T023415-efb962-CAND-002.json

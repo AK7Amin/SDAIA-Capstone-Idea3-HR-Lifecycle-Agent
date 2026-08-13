@@ -18,7 +18,7 @@ Each row links to code **and** to captured output from a real run.
 
 | Rubric deliverable | Implementation | Live evidence |
 |---|---|---|
-| **D1** Agentic reasoning & tool use (15) | [`src/tools.py`](src/tools.py) (MCP-style declared schemas), [`src/agents/react.py`](src/agents/react.py) (ReAct), [`src/agents/real.py`](src/agents/real.py) | [`capstone.ipynb`](capstone.ipynb) §2–3 · [`reports/traces/`](reports/traces/) — `tool_call` events with arguments and results |
+| **D1** Agentic reasoning & tool use (15) | [`src/tools.py`](src/tools.py) (MCP-style declared schemas), [`src/agents/react.py`](src/agents/react.py) (ReAct), [`src/agents/real.py`](src/agents/real.py) | [`capstone.ipynb`](capstone.ipynb) §2–3 · [`reports/react/`](reports/react/) — per-step tool **arguments and observations** |
 | **D2** Graph orchestration (20) | [`src/graph/build.py`](src/graph/build.py) — 10 nodes, 4 conditional routers, 2 bounded loops | [`capstone.ipynb`](capstone.ipynb) §4 (mermaid from the compiled graph) · [`tests/test_graph_paths.py`](tests/test_graph_paths.py) — every path asserted |
 | **D3** Multi-agent & roles (20) | [`src/agents/real.py`](src/agents/real.py) (5 named roles), [`src/schemas.py`](src/schemas.py) (typed messages) | every trace shows each role's decision as its own contract |
 | **D4** Security, guardrails, observability (20) | [`src/guardrails/`](src/guardrails/), [`src/observability/`](src/observability/) | [`reports/logs/01-live-run.log`](reports/logs/01-live-run.log) — injection removed, PII masked · [`reports/dashboard.html`](reports/dashboard.html) · notebook §6 tamper demo |
@@ -29,7 +29,7 @@ Verify it yourself in one minute — no keys, no Docker, no network:
 
 ```bash
 pip install -r requirements-dev.txt
-pytest -q                      # 464 tests
+pytest -q                      # 473 tests
 python main.py verify-traces   # recomputes every audit hash chain from disk
 ```
 
@@ -144,9 +144,9 @@ curl -s -X POST localhost:8000/process -H "X-Api-Token: $API_TOKEN" \
 | Metric | Value |
 |---|---|
 | Candidates processed | 5 (clean hire, injected résumé, sparse, PII-heavy, invalid intake) |
-| Model calls / tokens | 26 calls · 18,191 tokens (Mistral) |
+| Model calls / tokens | 24 calls · 18,554 tokens (Mistral) |
 | Traces, all chain-verified | 5/5 |
-| Tests | **464** offline + 4 Docker-marked |
+| Tests | **473** offline + 4 Docker-marked |
 
 ## Repository layout
 
@@ -157,7 +157,7 @@ tests/        13 suites; default run is offline (no keys, no Docker, no network)
 templates/    Jinja2 contract & welcome documents
 policies/     synthetic HR handbook (POL-001…POL-005)
 sample_candidates/  five synthetic cases, one per designed path
-reports/      traces/, logs/, metrics-snapshot.json, dashboard.html
+reports/      traces/, react/, logs/, metrics-snapshot.json, dashboard.html
 docs/plan/    PRD, critique round 1, run log — how this was built
 capstone.ipynb  executed evidence notebook
 ```
