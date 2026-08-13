@@ -1,5 +1,5 @@
 {
-  "thread_id": "run20260813T014527-def484-CAND-003",
+  "thread_id": "run20260813T021201-a2c5a4-CAND-003",
   "case_id": "CAND-003",
   "chain_intact": true,
   "events": [
@@ -32,21 +32,21 @@
     },
     {
       "node": "plan_reviewer",
-      "summary": "verdict 'revise' after 1 revision(s), 1 open concern(s)",
+      "summary": "verdict 'revise' after 1 revision(s), 2 open concern(s)",
       "reasoning_pattern": "reflexion",
       "cost_usd": 0.0,
       "latency_ms": 0,
       "prev_hash": "a3191204bcfa16f57a1e4bbe280d34df0c467433b9ff7726e9fa1b4f54487491",
-      "digest": "46b37144fb65bf992757ef0dca726ba7011bc2a21eec67e0800fa9add4ee8426"
+      "digest": "2629e37dc600970b56abe70c7a9702d4e11150798faefe16112b1280c06b4f1d"
     },
     {
       "node": "training_planner",
-      "summary": "planned 4 week(s), addressing 1 reviewer concern(s)",
+      "summary": "planned 4 week(s), addressing 2 reviewer concern(s)",
       "reasoning_pattern": "plan-and-execute",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "46b37144fb65bf992757ef0dca726ba7011bc2a21eec67e0800fa9add4ee8426",
-      "digest": "02bfa1b19c755a435cda4b9dd01e156209bf0c2b0901cac769b0c95b6cf1ee2c"
+      "prev_hash": "2629e37dc600970b56abe70c7a9702d4e11150798faefe16112b1280c06b4f1d",
+      "digest": "73ff57c08ba7d02da639b405643b16b8f3730ac4f531f2e6bad3734ec32fd9b2"
     },
     {
       "node": "plan_reviewer",
@@ -54,8 +54,8 @@
       "reasoning_pattern": "reflexion",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "02bfa1b19c755a435cda4b9dd01e156209bf0c2b0901cac769b0c95b6cf1ee2c",
-      "digest": "557c750522d404e24ada604a30c276262c42e66cd19d3a11b0a0bb2fdae78706"
+      "prev_hash": "73ff57c08ba7d02da639b405643b16b8f3730ac4f531f2e6bad3734ec32fd9b2",
+      "digest": "1b2aeebc8d5dc42d197247aaea299e64dbe910613b1d30e7dbe3473bb062e4f7"
     },
     {
       "node": "contract_drafter",
@@ -63,8 +63,8 @@
       "reasoning_pattern": "",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "557c750522d404e24ada604a30c276262c42e66cd19d3a11b0a0bb2fdae78706",
-      "digest": "85a1bd0dbf254b7dc0d324fe61583e75669aae0984ff129f5dff7fb65d4f7762"
+      "prev_hash": "1b2aeebc8d5dc42d197247aaea299e64dbe910613b1d30e7dbe3473bb062e4f7",
+      "digest": "be4b8ce5ab74ba4bb601d1f5952166a4872aa889315e31a254945b0cd7b0652f"
     },
     {
       "node": "hr_gate",
@@ -72,8 +72,8 @@
       "reasoning_pattern": "human-in-the-loop",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "85a1bd0dbf254b7dc0d324fe61583e75669aae0984ff129f5dff7fb65d4f7762",
-      "digest": "6903050366ccc99a6f37d8e3e531f8c0a5ff4d5d4b85124a42bda64f422783f3"
+      "prev_hash": "be4b8ce5ab74ba4bb601d1f5952166a4872aa889315e31a254945b0cd7b0652f",
+      "digest": "82fc83af3058d6eb4f5e24c824f74e1e7abe6408cca1beb5e1d9869f672c413c"
     },
     {
       "node": "offboard",
@@ -81,8 +81,8 @@
       "reasoning_pattern": "",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "6903050366ccc99a6f37d8e3e531f8c0a5ff4d5d4b85124a42bda64f422783f3",
-      "digest": "da4333fa4e1b5af745581db1692a1e56d87752fcc00c71a4fde968092d430cec"
+      "prev_hash": "82fc83af3058d6eb4f5e24c824f74e1e7abe6408cca1beb5e1d9869f672c413c",
+      "digest": "aba2251f712310011daed1253b41ecd1687a7fab32849843eeb30decb50888b9"
     }
   ]
 }

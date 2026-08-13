@@ -1,15 +1,83 @@
 {
-  "generated_at": "2026-08-13T01:46:18Z",
+  "generated_at": "2026-08-13T02:12:31Z",
   "thread_ids": [
-    "run20260813T014527-def484-CAND-003"
+    "run20260813T021134-a374a7-CAND-001",
+    "run20260813T021150-8b1318-CAND-002",
+    "run20260813T021201-a2c5a4-CAND-003",
+    "run20260813T021213-bf1c29-CAND-004",
+    "run20260813T021224-d5da40-CAND-005"
   ],
   "usage": {
-    "total_tokens": 0,
-    "total_latency_ms": 0,
-    "total_ref_cost_usd": 0.0,
-    "per_node": {},
-    "per_case": {},
-    "per_provider": {}
+    "total_tokens": 18191,
+    "total_latency_ms": 48781,
+    "total_calls": 0,
+    "per_node": {
+      "profile_analyst": {
+        "calls": 4,
+        "tokens": 2187,
+        "latency_ms": 4893,
+        "ref_cost_usd": 0.00047835
+      },
+      "training_planner": {
+        "calls": 8,
+        "tokens": 6609,
+        "latency_ms": 28834,
+        "ref_cost_usd": 0.0019421999999999998
+      },
+      "plan_reviewer": {
+        "calls": 8,
+        "tokens": 7665,
+        "latency_ms": 10595,
+        "ref_cost_usd": 0.00139725
+      },
+      "contract_drafter": {
+        "calls": 4,
+        "tokens": 1730,
+        "latency_ms": 4459,
+        "ref_cost_usd": 0.00035309999999999996
+      },
+      "it_provisioner": {
+        "calls": 2,
+        "tokens": 1662,
+        "latency_ms": 2464,
+        "ref_cost_usd": 0.00035505
+      }
+    },
+    "per_case": {
+      "CAND-001": {
+        "calls": 8,
+        "tokens": 6584,
+        "latency_ms": 18168,
+        "ref_cost_usd": 0.00151095
+      },
+      "CAND-002": {
+        "calls": 6,
+        "tokens": 4531,
+        "latency_ms": 10315,
+        "ref_cost_usd": 0.0010252500000000001
+      },
+      "CAND-003": {
+        "calls": 6,
+        "tokens": 4265,
+        "latency_ms": 12290,
+        "ref_cost_usd": 0.00097635
+      },
+      "CAND-004": {
+        "calls": 6,
+        "tokens": 4473,
+        "latency_ms": 10472,
+        "ref_cost_usd": 0.0010134
+      }
+    },
+    "per_provider": {
+      "mistral": {
+        "calls": 26,
+        "tokens": 19853,
+        "latency_ms": 51245,
+        "ref_cost_usd": 0.00452595
+      }
+    },
+    "total_ref_cost_usd": 0.0
   },
   "counters": {
     "cases_processed_total": {
@@ -23,7 +91,7 @@
     "llm_failovers_total": {},
     "case_latency_ms": {
       "count": 1.0,
-      "sum": 236.645299999509
+      "sum": 236.74629999732133
     }
   }
 }

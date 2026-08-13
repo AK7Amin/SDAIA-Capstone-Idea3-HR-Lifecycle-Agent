@@ -1,5 +1,5 @@
 {
-  "thread_id": "run20260813T014516-d8da70-CAND-002",
+  "thread_id": "run20260813T021150-8b1318-CAND-002",
   "case_id": "CAND-002",
   "chain_intact": true,
   "events": [
@@ -32,21 +32,21 @@
     },
     {
       "node": "plan_reviewer",
-      "summary": "verdict 'revise' after 1 revision(s), 2 open concern(s)",
+      "summary": "verdict 'revise' after 1 revision(s), 1 open concern(s)",
       "reasoning_pattern": "reflexion",
       "cost_usd": 0.0,
       "latency_ms": 0,
       "prev_hash": "3fc8d8853de2aceb697d04a1308f327bf9561e944fbe9f14a9f454ce03cf06b5",
-      "digest": "0f437fe24384f90da3fc76d599a70afb9a99a441da74506e49d68d4d2cd328ff"
+      "digest": "157c16daccc606303f8cf6db7544e0d37133c462dfd1bcef65747ca449c2f4c3"
     },
     {
       "node": "training_planner",
-      "summary": "planned 4 week(s), addressing 2 reviewer concern(s)",
+      "summary": "planned 4 week(s), addressing 1 reviewer concern(s)",
       "reasoning_pattern": "plan-and-execute",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "0f437fe24384f90da3fc76d599a70afb9a99a441da74506e49d68d4d2cd328ff",
-      "digest": "be95accbf148b0174b9dcb3659d543ba823c96a3158f87e01cbf14792a9ce1a3"
+      "prev_hash": "157c16daccc606303f8cf6db7544e0d37133c462dfd1bcef65747ca449c2f4c3",
+      "digest": "86a5410a54d071f52123bd7c557ab5963ef9479a9356f14a5c7fc77fe43ed238"
     },
     {
       "node": "plan_reviewer",
@@ -54,8 +54,8 @@
       "reasoning_pattern": "reflexion",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "be95accbf148b0174b9dcb3659d543ba823c96a3158f87e01cbf14792a9ce1a3",
-      "digest": "e9d167510fa34181c5ba1ade4741863119f181da9b28876da0d300cb31837848"
+      "prev_hash": "86a5410a54d071f52123bd7c557ab5963ef9479a9356f14a5c7fc77fe43ed238",
+      "digest": "8a83a990f242c1db6f5ef1ec2c9c732b1a6a41170b516359cf1555c3ab6a6c3a"
     },
     {
       "node": "contract_drafter",
@@ -63,8 +63,8 @@
       "reasoning_pattern": "",
       "cost_usd": 0.0,
       "latency_ms": 0,
-      "prev_hash": "e9d167510fa34181c5ba1ade4741863119f181da9b28876da0d300cb31837848",
-      "digest": "48ba7e5f9937e756a58e1759671cb5569aee343219529ad7a6369b4adf83687c"
+      "prev_hash": "8a83a990f242c1db6f5ef1ec2c9c732b1a6a41170b516359cf1555c3ab6a6c3a",
+      "digest": "c618a7ffa3603a3f68da11d49972f3dec556e388c41a7ba276c8741238a84c98"
     }
   ]
 }
