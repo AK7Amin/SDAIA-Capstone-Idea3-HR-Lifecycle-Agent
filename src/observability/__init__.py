@@ -36,6 +36,7 @@ from .tracing import (
     record_node,
     reset_metrics,
     write_metrics_snapshot,
+    write_react_transcript,
     write_trace,
 )
 from .verifier import EXIT_NO_TRACES, EXIT_OK, EXIT_PROBLEMS, verify_all, verify_trace_file
@@ -66,5 +67,6 @@ __all__ = [
     "verify_all",
     "verify_trace_file",
     "write_metrics_snapshot",
+    "write_react_transcript",
     "write_trace",
 ]

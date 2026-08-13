@@ -38,7 +38,12 @@ from src import checkpointing
 from src.effects import FileEffects
 from src.guardrails import BudgetExceeded, InputTooLarge
 from src.llm import MissingKeyError
-from src.observability import TRACES_DIRNAME, record_llm_failover, verify_all
+from src.observability import (
+    TRACES_DIRNAME,
+    record_llm_failover,
+    verify_all,
+    write_react_transcript,
+)
 from src.pipeline import (
     DEFAULT_INTAKE_DIRNAME,
     PROJECT_ROOT,
@@ -268,6 +273,17 @@ def cmd_resume(args: argparse.Namespace) -> int:
             f"thread={result['thread_id']}"
         )
         _report_reasoning(wiring, seen_react)
+        # The audit trail proves a tool RAN; the transcript shows what it was
+        # asked and what it answered. Written beside the trace so the D1 claim
+        # has an artifact behind it instead of a softer sentence.
+        transcript = write_react_transcript(
+            Path(result["trace_file"]).parent.parent,
+            result["thread_id"],
+            result["case_id"],
+            wiring.react_runs[seen_react:],
+        )
+        if transcript is not None:
+            _detail(f"react transcript: {transcript.name}")
 
     case_dir = root / "outbox" / result["case_id"]
     documents = sorted(path.name for path in case_dir.glob("*")) if case_dir.is_dir() else []

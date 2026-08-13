@@ -683,3 +683,46 @@ def test_package_exports_the_run_and_verify_surface():
         assert hasattr(obs, name), f"src.observability does not export {name}"
     assert obs.render_dashboard is dashboard.render
     assert tracing.TRACES_DIRNAME == "traces"
+
+
+class TestReactTranscriptIsPersisted:
+    """The README promised traces carrying tool arguments and results; the
+    trace events are one-line summaries. Rather than soften the claim, the
+    ReAct transcript itself is now written next to the trace — D1's evidence."""
+
+    def test_writes_steps_with_arguments_and_observations(self, tmp_path):
+        import json
+
+        from src.observability import write_react_transcript
+
+        class _Step:
+            def __init__(self, thought, action, action_input, observation):
+                self.thought, self.action = thought, action
+                self.action_input, self.observation = action_input, observation
+
+        class _Run:
+            decision_source = "model"
+            forced_first_call = True
+            steps = [
+                _Step("I must read the handbook first", "hr_policy_lookup",
+                      {"query": "equipment by role"}, "POL-003 - Equipment allocation..."),
+                _Step("Now the start date", "date_calculator",
+                      {"expression": "2026-09-01 + 90 days"}, "2026-11-30"),
+            ]
+
+        path = write_react_transcript(tmp_path, "thread-1", "CASE-1", [_Run()])
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        assert doc["thread_id"] == "thread-1" and doc["case_id"] == "CASE-1"
+        run = doc["runs"][0]
+        assert run["decision_source"] == "model"
+        assert run["forced_first_call"] is True        # honest attribution travels
+        step = run["steps"][0]
+        assert step["action"] == "hr_policy_lookup"
+        assert step["action_input"] == {"query": "equipment by role"}
+        assert "POL-003" in step["observation"]
+        assert step["thought"]
+
+    def test_no_file_when_there_was_no_react_run(self, tmp_path):
+        from src.observability import write_react_transcript
+
+        assert write_react_transcript(tmp_path, "t", "c", []) is None

@@ -313,6 +313,57 @@ def write_trace(
     return write_text_lf(path, _dumps(payload))
 
 
+def write_react_transcript(
+    reports_dir: Path | str,
+    thread_id: str,
+    case_id: str,
+    react_runs: Sequence[Any],
+) -> Path | None:
+    """Persist the ReAct transcript: thought, tool, ARGUMENTS, observation.
+
+    The audit trail carries one-line summaries — enough to prove a tool ran,
+    not enough to show what it was asked or what it answered. The rubric wants
+    tool calls visible, so the full transcript is written beside the trace
+    instead of the claim being softened. Returns None when the case never
+    reached the ReAct provisioner (a quarantined case, for instance).
+    """
+    runs = [run for run in react_runs if run is not None]
+    if not runs:
+        return None
+    traces = Path(reports_dir) / TRACES_DIRNAME
+    traces.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "thread_id": str(thread_id),
+        "case_id": str(case_id),
+        "generated_at": _utc_now(),
+        "runs": [
+            {
+                "decision_source": getattr(run, "decision_source", "model"),
+                # Independent of decision_source BY DESIGN: a forced call must
+                # stay labelled forced even when the verdict later falls back.
+                "forced_first_call": bool(getattr(run, "forced_first_call", False)),
+                "steps": [
+                    {
+                        "thought": getattr(step, "thought", "") or "",
+                        "action": getattr(step, "action", None),
+                        "action_input": getattr(step, "action_input", None),
+                        "observation": str(getattr(step, "observation", "") or "")[:600],
+                    }
+                    for step in getattr(run, "steps", [])
+                ],
+            }
+            for run in runs
+        ],
+    }
+    out = traces / f"{_trace_stem(thread_id)}-react.json"
+    out.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    return out
+
+
 def write_metrics_snapshot(
     reports_dir: Path | str,
     meter_snapshot: Mapping[str, Any] | None,
