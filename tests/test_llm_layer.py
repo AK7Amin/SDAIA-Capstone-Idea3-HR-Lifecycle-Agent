@@ -492,3 +492,58 @@ class TestDeadProviderFailover:
         except RuntimeError:
             pass
         assert len(calls) == 1
+
+
+class TestSnapshotIsADetachedCopy:
+    """The snapshot is written to disk LATER than it is taken. Returning the
+    live bucket dicts by reference made the committed artifact contradict
+    itself: scalars frozen at call time, buckets still growing until the JSON
+    dump. Found by the final review in reports/metrics-snapshot.json."""
+
+    def test_buckets_do_not_keep_growing_after_the_snapshot(self, monkeypatch):
+        client = two_provider_client(monkeypatch)
+        monkeypatch.setattr(client, "_post", lambda *a, **k: ("ok", 10, 5))
+
+        client.invoke("one", node="profile_analyst", case_id="C1")
+        snap = client.meter.snapshot()
+        client.invoke("two", node="it_provisioner", case_id="C1")
+
+        assert snap["per_node"] == {"profile_analyst": snap["per_node"]["profile_analyst"]}
+        assert "it_provisioner" not in snap["per_node"]
+        assert snap["per_node"]["profile_analyst"]["calls"] == 1
+
+    def test_scalars_and_buckets_agree_inside_one_snapshot(self, monkeypatch):
+        client = two_provider_client(monkeypatch)
+        monkeypatch.setattr(client, "_post", lambda *a, **k: ("ok", 10, 5))
+        client.invoke("a", node="n1", case_id="C1")
+        client.invoke("b", node="n2", case_id="C1")
+
+        snap = client.meter.snapshot()
+        assert snap["total_tokens"] == sum(b["tokens"] for b in snap["per_node"].values())
+        assert round(snap["total_ref_cost_usd"], 6) == round(
+            sum(b["ref_cost_usd"] for b in snap["per_node"].values()), 6
+        )
+
+
+class TestFailoverIsRecorded:
+    """A silent failover is an unobserved failover: llm_failovers_total read
+    zero even when a provider had actually gone down mid-run."""
+
+    def test_invoke_records_the_failover_counter(self, monkeypatch):
+        import urllib.error
+
+        from src.observability import metrics_text, reset_metrics
+
+        reset_metrics()
+        client = two_provider_client(monkeypatch)
+
+        def fake_post(key, prompt, base_url=None, model=None):
+            if "p1" in (base_url or ""):
+                raise urllib.error.HTTPError("u", 429, "rate", {}, None)
+            return ("ok", 1, 1)
+
+        monkeypatch.setattr(client, "_post", fake_post)
+        monkeypatch.setattr("time.sleep", lambda _s: None)
+        client.invoke("hi", node="n")
+        assert "llm_failovers_total" in metrics_text()
+        assert 'provider="p1.example"' in metrics_text()

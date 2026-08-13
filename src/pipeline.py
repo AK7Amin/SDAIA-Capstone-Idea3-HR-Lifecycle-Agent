@@ -54,6 +54,7 @@ from src.guardrails import (
     DEFAULT_MAX_CALLS,
     DEFAULT_SIZE_LIMIT,
     BudgetGuard,
+    BudgetExceeded,
     InputTooLarge,
     enforce_input_size,
     find_pii,
@@ -62,6 +63,7 @@ from src.guardrails import (
     scan_text,
 )
 from src.observability import (
+    BLOCK_BUDGET,
     BLOCK_INJECTION,
     BLOCK_PII,
     BLOCK_SIZE,
@@ -615,11 +617,34 @@ def write_run_summary(
         prior = _load_metrics(reports_dir)
         thread_ids = _union_preserving_order(prior.get("thread_ids", []), thread_ids)
         snapshot = _add_usage(prior.get("usage") or {}, snapshot)
-    write_metrics_snapshot(reports_dir, snapshot, thread_ids)
+    written = write_metrics_snapshot(reports_dir, snapshot, thread_ids)
+    if merge:
+        # The counters live in THIS process's Prometheus registry, so a resume
+        # would otherwise publish "cases_processed_total: {offboarded: 1}" over
+        # a five-case run. Fold them into what the batch already reported.
+        _merge_counters_into(written, prior.get("counters") or {})
     return render_dashboard(
         reports_dir / METRICS_FILENAME,
         reports_dir / TRACES_DIRNAME,
         reports_dir / DASHBOARD_FILENAME,
+    )
+
+
+def _merge_counters_into(path: Path, prior_counters: Mapping[str, Any]) -> None:
+    """Sum the freshly written counters onto the ones already on disk."""
+    if not prior_counters:
+        return
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    merged: dict[str, dict] = {k: dict(v) for k, v in prior_counters.items()}
+    for metric, labels in (doc.get("counters") or {}).items():
+        slot = merged.setdefault(metric, {})
+        for label, value in labels.items():
+            slot[label] = (slot.get(label) or 0) + value
+    doc["counters"] = merged
+    path.write_text(
+        json.dumps(doc, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
     )
 
 
@@ -652,8 +677,13 @@ def _add_usage(base: Mapping[str, Any], extra: Mapping[str, Any]) -> dict:
     if not extra:
         return dict(base)
     merged: dict[str, Any] = {}
-    for key in ("total_tokens", "total_latency_ms", "total_calls"):
+    # total_ref_cost_usd MUST be summed here: leaving it to the carry loop let
+    # a no-LLM resume's 0.0 replace the batch's real cost. total_calls is not
+    # emitted by UsageMeter.snapshot() — inventing it printed "0 calls" next to
+    # buckets showing 26.
+    for key in ("total_tokens", "total_latency_ms", "total_ref_cost_usd"):
         merged[key] = (base.get(key) or 0) + (extra.get(key) or 0)
+    merged["total_ref_cost_usd"] = round(merged["total_ref_cost_usd"], 6)
     for bucket in ("per_node", "per_case", "per_provider"):
         out: dict[str, dict] = {k: dict(v) for k, v in (base.get(bucket) or {}).items()}
         for name, stats in (extra.get(bucket) or {}).items():
@@ -756,14 +786,22 @@ def process_case(
         }
         meta[REPORTS_ROOT_KEY] = str(reports)
 
-        result = graph.invoke(
-            {
-                "case_id": case_id,
-                "candidate_meta": meta,
-                "masked_resume": guard.text,
-            },
-            {"configurable": {"thread_id": thread_id}},
-        )
+        try:
+            result = graph.invoke(
+                {
+                    "case_id": case_id,
+                    "candidate_meta": meta,
+                    "masked_resume": guard.text,
+                },
+                {"configurable": {"thread_id": thread_id}},
+            )
+        except BudgetExceeded:
+            # The budget guard is a REFUSAL, not a crash: audit it and let the
+            # caller skip this case. Before this, one over-budget case killed
+            # the whole batch with a traceback and wrote no trace at all —
+            # while BLOCK_BUDGET sat defined and never incremented.
+            record_guardrail_block(BLOCK_BUDGET)
+            raise
     finally:
         llm_module.reset_request_state()
 

@@ -36,7 +36,7 @@ from typing import Iterator
 
 from src import checkpointing
 from src.effects import FileEffects
-from src.guardrails import InputTooLarge
+from src.guardrails import BudgetExceeded, InputTooLarge
 from src.llm import MissingKeyError
 from src.observability import TRACES_DIRNAME, record_llm_failover, verify_all
 from src.pipeline import (
@@ -180,6 +180,11 @@ def _report_reasoning(wiring, before: int) -> None:
         )
 
 
+#: Errors that refuse ONE case without killing the batch. BudgetExceeded
+#: belongs here: an over-budget case is a governed refusal, not a crash.
+REFUSAL_ERRORS = (InputTooLarge, BudgetExceeded, ValueError)
+
+
 def cmd_run(args: argparse.Namespace) -> int:
     """Process every intake file in a folder, pausing each at the gate."""
     intake = Path(args.intake) if args.intake else PROJECT_ROOT / DEFAULT_INTAKE_DIRNAME
@@ -210,7 +215,7 @@ def cmd_run(args: argparse.Namespace) -> int:
                     reports_dir=reports,
                     meter_snapshot=wiring.meter_snapshot(),
                 )
-            except (InputTooLarge, ValueError) as exc:
+            except REFUSAL_ERRORS as exc:
                 refused += 1
                 say(f"{case_file.name}  REFUSED  {type(exc).__name__}: {exc}")
                 continue

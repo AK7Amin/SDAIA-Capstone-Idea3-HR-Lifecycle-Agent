@@ -85,6 +85,16 @@ def reset_request_state() -> None:
     _ACTIVE_BUDGET.set(None)
 
 
+def _record_failover(provider_name: str) -> None:
+    """Best-effort metric — observability must never break a model call."""
+    try:
+        from src.observability import record_llm_failover
+
+        record_llm_failover(provider_name)
+    except Exception:  # pragma: no cover - metrics are never load-bearing
+        pass
+
+
 def _host_of(url: str) -> str:
     """Short provider label taken from its endpoint, for metrics and logs."""
     return url.split("//")[-1].split("/")[0] or "unknown"
@@ -176,14 +186,20 @@ class UsageMeter:
         return ref_cost
 
     def snapshot(self) -> dict:
-        """JSON-serialisable view for the metrics artifact and the dashboard."""
+        """JSON-serialisable view for the metrics artifact and the dashboard.
+
+        Buckets are DEEP-COPIED on purpose: a snapshot is taken before a case
+        runs and written to disk after it, so returning the live dicts made the
+        artifact contradict itself — scalars frozen at call time, buckets still
+        growing until the JSON dump. A snapshot is a photograph, not a window.
+        """
         return {
             "total_tokens": self.total_tokens,
             "total_latency_ms": self.total_latency_ms,
             "total_ref_cost_usd": round(self.total_ref_cost_usd, 6),
-            "per_node": self.per_node,
-            "per_case": self.per_case,
-            "per_provider": self.per_provider,
+            "per_node": {k: dict(v) for k, v in self.per_node.items()},
+            "per_case": {k: dict(v) for k, v in self.per_case.items()},
+            "per_provider": {k: dict(v) for k, v in self.per_provider.items()},
         }
 
 
@@ -384,6 +400,10 @@ class LLMClient:
                 break
             except Exception as exc:  # noqa: BLE001 — classified by status
                 if self._should_failover(exc) and index < len(attempts) - 1:
+                    # An unobserved failover is a failover nobody can prove
+                    # happened: the counter used to move only in the demo
+                    # command, so a real mid-run outage left metrics at zero.
+                    _record_failover(provider.name)
                     continue  # spent or invalid credential → next in the chain
                 # `from None` keeps the un-redacted original out of the chained
                 # traceback; the message itself is scrubbed.

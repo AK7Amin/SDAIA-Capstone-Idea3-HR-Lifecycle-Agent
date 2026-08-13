@@ -1,0 +1,79 @@
+Command: PYTHONIOENCODING=utf-8 /c/Users/abdul/sdaia-agents-venv/Scripts/python.exe -X utf8 -m pytest -q
+Exit Code: 0
+
+Output:
+........................................................................ [ 15%]
+........................................................................ [ 31%]
+........................................................................ [ 46%]
+........................................................................ [ 62%]
+........................................................................ [ 77%]
+........................................................................ [ 93%]
+................................                                         [100%]
+============================== warnings summary ===============================
+..\..\..\..\sdaia-agents-venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\abdul\sdaia-agents-venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+464 passed, 4 deselected, 1 warning in 10.91s
+
+---
+
+Task 2: Docker-marked tests
+Command: PYTHONIOENCODING=utf-8 /c/Users/abdul/sdaia-agents-venv/Scripts/python.exe -X utf8 -m pytest -q -m docker -rs
+Exit Code: 0
+
+Output:
+....                                                                     [100%]
+============================== warnings summary ===============================
+..\..\..\..\sdaia-agents-venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\abdul\sdaia-agents-venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+4 passed, 464 deselected, 1 warning in 8.02s
+
+---
+
+Task 3: Trace verifier
+Command: python main.py verify-traces
+Exit Code: 0
+
+Output:
+OK   run20260813T021134-a374a7-CAND-001.json           chain verified
+OK   run20260813T021150-8b1318-CAND-002.json           chain verified
+OK   run20260813T021201-a2c5a4-CAND-003.json           chain verified
+OK   run20260813T021213-bf1c29-CAND-004.json           chain verified
+OK   run20260813T021224-d5da40-CAND-005.json           chain verified
+checked 5 trace file(s): 5 ok, 0 with problems
+
+---
+
+Task 4: Secret leak scan
+
+.env tracked: NOT tracked (good)
+Key-shaped strings: No key-shaped strings found
+Windows absolute paths in tracked artifacts: None found in git-tracked files
+.dockerignore contains .env: YES
+
+---
+
+Task 5: README truth check
+
+All file paths exist: VERIFIED
+All main.py subcommands wired: VERIFIED (run, resume, attack, verify-traces, demo-failover)
+Evidence numbers match:
+  - Tests: 464 (README claims 464) ✓
+  - Traces: 5 (README claims 5) ✓
+  - Total tokens: 18,191 (README claims 18,191) ✓
+  - Model calls: 26 (README claims 26) ✓
+
+---
+
+Task 6: Notebook check
+
+Total code cells: 13
+Cells with outputs: 13
+Cells with error outputs: 0
+Execution counts: Sequential 1–13 (no gaps, no None values)
+

@@ -679,3 +679,79 @@ class TestResumeDoesNotClobberRunMetrics:
         snap = json.loads((reports / "metrics-snapshot.json").read_text(encoding="utf-8"))
         assert snap["usage"]["total_tokens"] == 5
         assert snap["thread_ids"] == ["t-2"]
+
+
+class TestBudgetRefusalIsHandled:
+    """budget.py promises "the caller catches them, audits the refusal and
+    routes the case to quarantine" — no production caller did. One over-budget
+    case killed the whole batch with a traceback and wrote no trace."""
+
+    def test_over_budget_case_is_refused_not_crashed(self, tmp_path, monkeypatch):
+        import json
+
+        from src.guardrails import BudgetExceeded
+        from src.observability import metrics_text, reset_metrics
+        from src.pipeline import process_case
+
+        reset_metrics()
+        case = tmp_path / "intake" / "CASE-B.json"
+        case.parent.mkdir(parents=True)
+        case.write_text(json.dumps({
+            "candidate_id": "CASE-B", "name": "Over Budget", "role": "Data Engineer",
+            "start_date": "2026-09-01", "resume_text": "5 years of pipelines.",
+        }), encoding="utf-8")
+
+        class _Graph:
+            def invoke(self, *_a, **_k):
+                raise BudgetExceeded("budget exhausted for this case (12 calls)")
+
+        with pytest.raises(BudgetExceeded):
+            process_case(case, graph=_Graph())
+        assert 'guardrail_blocks_total{kind="budget"}' in metrics_text()
+
+    def test_cli_reports_the_refusal_and_keeps_going(self, tmp_path, monkeypatch):
+        """A batch must survive one poisoned case."""
+        import main as cli
+        from src.guardrails import BudgetExceeded
+
+        assert BudgetExceeded in cli.REFUSAL_ERRORS
+
+
+class TestMergedSnapshotIsInternallyConsistent:
+    """The committed artifact contradicted itself: total_calls=0 and cost=0.0
+    beside buckets showing 26 calls and real money. A grader reads that file."""
+
+    def test_cost_is_summed_not_replaced_by_a_free_resume(self, tmp_path):
+        import json
+
+        from src.pipeline import write_run_summary
+
+        reports = tmp_path / "reports"
+        (reports / "traces").mkdir(parents=True)
+        write_run_summary(reports, ["t-1"], {
+            "total_tokens": 4000, "total_ref_cost_usd": 0.0045,
+            "per_provider": {"mistral": {"calls": 20, "ref_cost_usd": 0.0045}},
+        })
+        write_run_summary(reports, ["t-1"], {
+            "total_tokens": 0, "total_ref_cost_usd": 0.0,
+            "per_provider": {},
+        }, merge=True)
+
+        usage = json.loads((reports / "metrics-snapshot.json").read_text(encoding="utf-8"))["usage"]
+        assert usage["total_ref_cost_usd"] == 0.0045      # not clobbered to 0.0
+        assert "total_calls" not in usage                 # never invented
+
+    def test_scalars_match_their_buckets(self, tmp_path):
+        import json
+
+        from src.pipeline import write_run_summary
+
+        reports = tmp_path / "reports"
+        (reports / "traces").mkdir(parents=True)
+        for tokens in (1000, 500):
+            write_run_summary(reports, ["t"], {
+                "total_tokens": tokens,
+                "per_node": {"n": {"calls": 1, "tokens": tokens}},
+            }, merge=True)
+        usage = json.loads((reports / "metrics-snapshot.json").read_text(encoding="utf-8"))["usage"]
+        assert usage["total_tokens"] == sum(b["tokens"] for b in usage["per_node"].values())
