@@ -1,6 +1,10 @@
 -r requirements.txt
 pytest>=8.0
+# httpx is never imported directly: fastapi.testclient.TestClient uses it as
+# its transport at runtime (tests/test_service_api.py).
 httpx>=0.27
 jupyter>=1.0
+# nbclient executes capstone.ipynb (tools/build_notebook.py); ipykernel is the
+# kernel it runs the cells in — needed at runtime, never imported.
 nbclient>=0.10
 ipykernel>=6.29

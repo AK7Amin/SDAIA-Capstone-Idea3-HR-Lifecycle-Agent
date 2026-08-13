@@ -155,7 +155,7 @@ git clone https://github.com/AK7Amin/SDAIA-Capstone-Idea3-HR-Lifecycle-Agent.git
 cd SDAIA-Capstone-Idea3-HR-Lifecycle-Agent
 python -m venv .venv && . .venv/Scripts/Activate.ps1   # Windows
 pip install -r requirements-dev.txt
-cp .env.example .env        # then fill in the keys
+cp .env.example .env        # then set your provider keys
 docker run -d --name idea3-pg -e POSTGRES_PASSWORD=capstone \
   -e POSTGRES_DB=hr_agent -p 5433:5432 postgres:16-alpine
 ```
